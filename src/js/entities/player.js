@@ -127,7 +127,7 @@ function playerUpdate(){
       player[0][9] = stateTimer + player[0][10];
       soundPlayer[5].play();
 
-      playerProjectileShot();
+      playerProjectileShot(0);
     }
   }
 
@@ -169,6 +169,14 @@ function playerUpdate(){
 
     // Get damage by enemy contact
     processGroup(enemies, enemyCollidesWithPlayer, 1);
+
+    // Attack
+    if(pressing[80] && player[1][9] < stateTimer){
+      player[1][9] = stateTimer + player[1][10];
+      soundPlayer[5].play();
+
+      playerProjectileShot(1);
+    }
   }
 
   // Manage states

@@ -1,1 +1,1 @@
-var playerProjectiles = [];
+var playerProjectiles = [[], []];

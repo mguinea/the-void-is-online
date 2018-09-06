@@ -43,7 +43,8 @@ var gameState = {
     processGroup(bosses, bossUpdate);
     processGroup(enemies, enemyUpdate);
     processGroup(explosions, explosionUpdate);
-    processGroup(playerProjectiles, playerProjectileUpdate);
+    processGroup(playerProjectiles[0], playerProjectileUpdate, 0);
+    processGroup(playerProjectiles[1], playerProjectileUpdate, 1);
     processGroup(powerups, powerupUpdate);
     processGroup(stars, starUpdate);
 
@@ -92,7 +93,8 @@ var gameState = {
     processGroup(bosses, bossDraw);
     processGroup(enemies, enemyDraw);
     processGroup(explosions, explosionDraw);
-    processGroup(playerProjectiles, playerProjectileDraw);
+    processGroup(playerProjectiles[0], playerProjectileDraw);
+    processGroup(playerProjectiles[1], playerProjectileDraw);
     processGroup(powerups, powerupDraw);
     processGroup(stars, starDraw);
 
