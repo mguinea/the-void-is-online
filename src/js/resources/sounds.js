@@ -1,9 +1,9 @@
 // 0: powerup
 // 1: menu Change
 // 2: menu selected
-// 3: player explosion
+// 3: player[0] explosion
 // 4: enemy explosion
-// 5: player basic shot
+// 5: player[0] basic shot
 
 var sounds = [
   [0,,0.01,,0.4093,0.4157,,0.2003,,,,,,0.0559,,,,,1,,,,,0.5],

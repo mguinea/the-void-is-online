@@ -22,10 +22,6 @@ var gameState = {
     gameOverTimer = 0,
     camVelocity = 65;
 
-    // debug
-    players = 2;
-    //
-    
     playerInit();
 
     wavesManagerInit();
@@ -39,8 +35,8 @@ var gameState = {
     playerUpdate();
 
     camTarget[0] += camVelocity * dt;
-    player[0] += camVelocity * dt;
-    player2[0] += camVelocity * dt;
+    player[0][0] += camVelocity * dt;
+    player[1][0] += camVelocity * dt;
 
     wavesManagerSpawner();
 
@@ -53,18 +49,36 @@ var gameState = {
 
 		// Check if game over
 		if(players == 1){
-			if(player[8] <= 0 && gameOverTimer == 0){
+			if(player[0][8] <= 0 && gameOverTimer == 0){
 				camVelocity = 0;
 				gameData[0] = 1;
         gameOverTimer = stateTimer + 3;
+
+        var hi = storageGet('hi', 0);
+        if(player[0][11] > hi){
+          storageSet('hi', player[0][11]);
+          storageSet('hip', 'PLAYER 1');
+        }
 			}
-		}/*else{
-			if(player[8] <= 0 && player2[8] <= 0 && gameOverTimer == 0){
+		}else if(players == 2){
+			if(player[0][8] <= 0 && player[1][8] <= 0 && gameOverTimer == 0){
 				camVelocity = 0;
-				gameOver = 1;
+				gameData[0] = 1;
         gameOverTimer = stateTimer + 3;
+
+        var hi = storageGet('hi', 0);
+        if(player[0][11] > hi){
+          storageSet('hi', player[0][11]);
+          storageSet('hip', 'PLAYER 1');
+        }
+
+        var hi = storageGet('hi', 0);
+        if(player[1][11] > hi){
+          storageSet('hi', player[1][11]);
+          storageSet('hip', 'PLAYER 2');
+        }
 			}
-		}*/
+		}
 
     if(gameOverTimer != 0 && gameOverTimer < stateTimer){
       setState(menuState);

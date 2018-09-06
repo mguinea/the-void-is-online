@@ -1,26 +1,11 @@
-/*function path (pts, noclose) { // eslint-disable-line no-unused-vars
-  ctx.beginPath();
-  var mv = 1;
-  for (var i = 0; pts && i<pts.length; ++i) {
-    var p = pts[i];
-    if (p) {
-      if (mv) ctx.moveTo(p[0], p[1]);
-      else ctx.lineTo(p[0], p[1]);
-      mv = 0;
-    }
-    else mv = 1;
-  }
-  if (!noclose) ctx.closePath();
-}*/
-
 function padLeft(nr, n, str){
     return Array(n-String(nr).length+1).join(str||'0')+nr;
 }
-
+/*
 function random(min, max){
   return (Math.random() * (max - min) + min);
 }
-
+*/
 function srand(min = null, max = null) {
   var x = Math.sin(seed++) * 10000;
   var r = x - Math.floor(x);
@@ -50,8 +35,48 @@ function sineMovement(a, b, c, d, x){
   return a * ( Math.sin ( b * ( x - c ) ) ) + d;
 }
 
-function processGroup( group, func ) {
+function processGroup( group, func, params = null ) {
   for ( var i = group.length - 1; i >= 0; --i ) {
-    func( group[i], i );
+    func( group[i], i, params );
   }
+}
+
+// Local Storage functions
+function storageIsSupported() {
+  if (typeof localStorage !== 'object') return false;
+  try {
+    localStorage.setItem('localStorage', 1);
+    localStorage.removeItem('localStorage');
+  }
+  catch (e) {
+    return false;
+  }
+  return true;
+}
+
+function storageSet(key, value) {
+  localStorage.setItem(localStorageId + '.' + key, storageEncode(value));
+}
+
+function storageGet(key, defaultValue) {
+  var raw = localStorage.getItem(localStorageId + '.' + key);
+  if (raw === null) return defaultValue;
+  try {
+    return storageDecode(raw);
+  }
+  catch (e) {
+    return raw;
+  }
+}
+
+function storageRemove(key) {
+  localStorage.removeItem(localStorageId + '.' + key);
+}
+
+function storageEncode(val) {
+  return JSON.stringify(val);
+}
+
+function storageDecode(str) {
+  return JSON.parse(str);
 }

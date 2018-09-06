@@ -23,7 +23,7 @@ var bossShapes = [
 
 function bossDestroy(i){
   soundPlayer[4].play();
-  player[11] += 1000;
+  player[0][11] += 1000;
   //explosions.push([enemies[i][0], enemies[i][1], stateTimer + 1, 0]);
   bosses.splice(i, 1);
 }

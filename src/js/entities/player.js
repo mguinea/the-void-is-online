@@ -12,11 +12,10 @@ Player
 9: shot next available (stateTimer + cadence)
 10: cadence shot
 11: score
-12: player respawn (stateTimer + cadence)
-13: player repawn cadence
+12: player[0] respawn (stateTimer + cadence)
+13: player[0] repawn cadence
 */
-var player = [],
-    player2 = [],
+var player = [[], []],
     playerShipDraws = [
       [
     		[-6, 6],
@@ -50,113 +49,178 @@ var player = [],
         [-6, 6]
     	]
     ],
-    playerShipsDrawIndex = 0;
+    playerShipsDrawIndex = [];
 
 function playerInit(){
-  player = [64, H/4 * 2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
-  player2= [64, H/4 * 3, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+  player[0] = [64, H/6 * 2, 48, 12, 0, 150, 0, 0, 1, 0, 0.2, 0, 0, 2];
+  player[1]= [64, H/6 * 4, 48, 12, 0, 150, 0, 0, 1, 0, 0.2, 0, 0, 2];
 }
 
 function playerUpdate(){
   if(gameData[0] == 1) return;
 
-  // If player is not dead
-  if(player[6] != 3){
-    player[6] = 0;
+  // If player[0] is not dead
+  if(player[0][6] != 3){
+    player[0][6] = 0;
 
     // Movement
     if(pressing[87]){ // Up
-      player[6] = 1;
-      if(player[1] > 32){
-        player[1] -= player[5] * dt;
+      player[0][6] = 1;
+      if(player[0][1] > 32){
+        player[0][1] -= player[0][5] * dt;
       }else{
-        player[1] = 32;
+        player[0][1] = 32;
       }
     }else if(pressing[83]){ // Down
-      player[6] = 2;
-      if(player[1] < H - 160){
-        player[1] += player[5] * dt;
+      player[0][6] = 2;
+      if(player[0][1] < H - 160){
+        player[0][1] += player[0][5] * dt;
       }else{
-        player[1] = H - 160;
+        player[0][1] = H - 160;
       }
     }
 
     if(pressing[65]){ // Left
-      if(player[0] > camTarget[0] + 64){
-        player[0] -= player[5] * dt;
+      if(player[0][0] > camTarget[0] + 64){
+        player[0][0] -= player[0][5] * dt;
       }else{
-        player[0] =  camTarget[0] + 64;
+        player[0][0] =  camTarget[0] + 64;
       }
 
     }else if(pressing[68]){ // Right
-      if(player[0] < camTarget[0] + W - 90){
-        player[0] += player[5] * dt;
+      if(player[0][0] < camTarget[0] + W - 90){
+        player[0][0] += player[0][5] * dt;
       }else{
-        player[0] = camTarget[0] + W - 90;
+        player[0][0] = camTarget[0] + W - 90;
       }
     }
 
     // Get damage by enemy contact
-    processGroup(enemies, enemyCollidesWithPlayer);
+    processGroup(enemies, enemyCollidesWithPlayer, 0);
 
     // Get damage by enemy projectile
     for(var i = 0; i < enemyProjectiles.length; ++i){
-      if(AABBCollides(player, enemyProjectiles[i])){
-        // enemyDestroy(i);
-        explosions.push([player[0], player[1], stateTimer + player[13], 0]);
+      if(AABBCollides(player[0], enemyProjectiles[i])){
+        explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
         soundPlayer[3].play();
-        player[6] = 3;                // Player state to dead
-        player[8] -= 1;               // Remove a life
-        player[12] = stateTimer + 2;  // Calculate when respawn
+        player[0][6] = 3;                // Player state to dead
+        player[0][8] -= 1;               // Remove a life
+        player[0][12] = stateTimer + 2;  // Calculate when respawn
       }
     }
 
     // Get powerup
     for(var i = 0; i < powerups.length; ++i){
-      if(AABBCollides(player, powerups[i])){
+      if(AABBCollides(player[0], powerups[i])){
         soundPlayer[0].play();
         powerupDestroy(i);
-        // explosions.push([player[0], player[1], stateTimer + player[13], 0]);
+        // explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
 
-        // player[6] = 3;                // Player state to dead
-        // player[8] -= 1;               // Remove a life
-        // player[12] = stateTimer + 2;  // Calculate when respawn
+        // player[0][6] = 3;                // Player state to dead
+        // player[0][8] -= 1;               // Remove a life
+        // player[0][12] = stateTimer + 2;  // Calculate when respawn
       }
     }
 
     // Attack
-    if(pressing[32] && player[9] < stateTimer){
-      player[9] = stateTimer + player[10];
+    if(pressing[32] && player[0][9] < stateTimer){
+      player[0][9] = stateTimer + player[0][10];
       soundPlayer[5].play();
 
       playerProjectileShot();
     }
   }
 
+  // If player[1] is not dead
+  if(player[1][6] != 3){
+    player[1][6] = 0;
+
+    // Movement
+    if(pressing[38]){ // Up
+      player[1][6] = 1;
+      if(player[1][1] > 32){
+        player[1][1] -= player[1][5] * dt;
+      }else{
+        player[1][1] = 32;
+      }
+    }else if(pressing[40]){ // Down
+      player[1][6] = 2;
+      if(player[1][1] < H - 160){
+        player[1][1] += player[1][5] * dt;
+      }else{
+        player[1][1] = H - 160;
+      }
+    }
+
+    if(pressing[37]){ // Left
+      if(player[1][0] > camTarget[0] + 64){
+        player[1][0] -= player[1][5] * dt;
+      }else{
+        player[1][0] =  camTarget[0] + 64;
+      }
+
+    }else if(pressing[39]){ // Right
+      if(player[1][0] < camTarget[0] + W - 90){
+        player[1][0] += player[1][5] * dt;
+      }else{
+        player[1][0] = camTarget[1] + W - 90;
+      }
+    }
+
+    // Get damage by enemy contact
+    processGroup(enemies, enemyCollidesWithPlayer, 1);
+  }
+
   // Manage states
-  switch(player[6]){
+  switch(player[0][6]){
     case 0:
-      playerShipsDrawIndex = 0;
+      playerShipsDrawIndex[0] = 0;
     break;
     case 1:
-      playerShipsDrawIndex = 1;
+      playerShipsDrawIndex[0] = 1;
     break;
     case 2:
-      playerShipsDrawIndex = 2;
+      playerShipsDrawIndex[0] = 2;
     break;
     case 3:
-      // If player is dead, change state to invencible after period of time and place in initial position
-      if(player[12] < stateTimer){
-        player[6] = 0;
-        player[0] = cam[0] + 64;
-        player[1] = H / 2;
+      // If player[0] is dead, place in initial position
+      if(player[0][12] < stateTimer && player[8] > 0){
+        player[0][6] = 0;
+        player[0][0] = cam[0] + 64;
+        player[0][1] = H/6 * 2;
       }
     break;
     case 4:
-      playerShipsDrawIndex = 0;
+      playerShipsDrawIndex[0] = 0;
     break;
     default:
-      playerShipsDrawIndex = 0;
+      playerShipsDrawIndex[0] = 0;
+    break;
+  }
+
+  switch(player[1][6]){
+    case 0:
+      playerShipsDrawIndex[1] = 0;
+    break;
+    case 1:
+      playerShipsDrawIndex[1] = 1;
+    break;
+    case 2:
+      playerShipsDrawIndex[1] = 2;
+    break;
+    case 3:
+      // If player[1] is dead, place in initial position
+      if(player[1][12] < stateTimer && player[8] > 0){
+        player[1][6] = 0;
+        player[1][0] = cam[0] + 64;
+        player[1][1] = H/6 * 4;
+      }
+    break;
+    case 4:
+      playerShipsDrawIndex[1] = 0;
+    break;
+    default:
+      playerShipsDrawIndex[1] = 0;
     break;
   }
 }
@@ -164,30 +228,30 @@ function playerUpdate(){
 function playerDraw(){
   if(gameData[0] == 1) return;
 
-  // If player is not dead
-  if(player[6] != 3){
+  // If player[0] is not dead
+  if(player[0][6] != 3){
     ctx.save();
-    ctx.translate(player[0] - cam[0], player[1]);
+    ctx.translate(player[0][0] - cam[0], player[0][1]);
     setContextAttribute(17, 0);
     setContextAttribute(26, 1);
     ctx.lineWidth = 2;
     // ctx.strokeStyle = '#f0f';
-    path(playerShipDraws[playerShipsDrawIndex]);
+    path(playerShipDraws[playerShipsDrawIndex[0]]);
     ctx.stroke();
     ctx.fill();
     ctx.restore();
   }
 
-  // If player2 is not dead
+  // If player[1] is not dead
   if(players == 2){
-    if(player2[6] != 3){
+    if(player[1][6] != 3){
       ctx.save();
-      ctx.translate(player2[0] - cam[0], player[1]);
+      ctx.translate(player[1][0] - cam[0], player[1][1]);
       setContextAttribute(17, 0);
       setContextAttribute(26, 1);
       ctx.lineWidth = 2;
       // ctx.strokeStyle = '#f0f';
-      path(playerShipDraws[playerShipsDrawIndex]);
+      path(playerShipDraws[playerShipsDrawIndex[1]]);
       ctx.stroke();
       ctx.fill();
       ctx.restore();
@@ -201,7 +265,7 @@ function playerMenuDraw(x, y){
   setContextAttribute(17, 0);
   setContextAttribute(26, 1);
   ctx.lineWidth = 2;
-  path(playerShipDraws[playerShipsDrawIndex]);
+  path(playerShipDraws[0]);
   ctx.stroke();
   ctx.fill();
   ctx.restore();
@@ -209,10 +273,10 @@ function playerMenuDraw(x, y){
 
 function playerHUDDraw(){
   // font ('TIMER ' + (~~stateTimer), W/2, H - 128, 17, 1, 0);
-  font ('1P  ' + padLeft(player[11], 7, 0), W/4, H - 128, 17, 1, 0);
+  font ('1P  ' + padLeft(player[0][11], 7, 0), W/4, H - 128, 17, 1, 0);
 
-  // Draw player 1 lives
-  for(var i = 0; i < player[8]; ++i){
+  // Draw player[0] 1 lives
+  for(var i = 0; i < player[0][8]; ++i){
     ctx.save();
     ctx.translate(W/4 + (i * 48) - 54, H - 100);
     setContextAttribute(17, 0);
@@ -224,10 +288,10 @@ function playerHUDDraw(){
   }
 
   if(players == 2){
-    font ('2P  ' + padLeft(player2[11],7, 0), W/4 * 3, H - 128, 17, 1, 0);
+    font ('2P  ' + padLeft(player[1][11],7, 0), W/4 * 3, H - 128, 17, 1, 0);
 
-    // Draw player 2 lives
-    for(var i = 0; i < player2[8]; ++i){
+    // Draw player[0] 2 lives
+    for(var i = 0; i < player[1][8]; ++i){
       ctx.save();
       ctx.translate(W/4 * 3 + (i * 48) - 54, H - 100);
       setContextAttribute(17, 0);

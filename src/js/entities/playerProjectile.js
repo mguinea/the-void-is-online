@@ -7,7 +7,7 @@ function playerProjectileDraw(e){
 }
 
 function playerProjectileShot(){
-  playerProjectiles.push([player[0] + 50, player[1] + 4, 16, 2, 600]);
+  playerProjectiles.push([player[0][0] + 50, player[0][1] + 4, 16, 2, 600]);
 }
 
 function playerProjectileUpdate(e, params, i){
@@ -15,11 +15,6 @@ function playerProjectileUpdate(e, params, i){
 
   // End of screen view
   if(e[0] > camTarget[0] + W){
-    playerProjectileDestroy(i);
-  }
-  // Collides with asteroid
-  if(AABBCollides(e, asteroid)){
-    asteroidDestroy();
     playerProjectileDestroy(i);
   }
   // Collides with enemy

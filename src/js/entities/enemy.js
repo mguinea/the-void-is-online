@@ -36,27 +36,22 @@ var enemyShapes = [
   ]
 ];
 
-function enemyCollidesWithPlayer(e, i){
-  if(AABBCollides(player, e)){
-    enemyDestroy(i);
+function enemyCollidesWithPlayer(enemy, iEnemy, iPlayer){
+  if(AABBCollides(player[iPlayer], enemy)){
+    enemyDestroy(iEnemy, iPlayer);
     soundPlayer[3].play();
-    
-    explosions.push([player[0], player[1], stateTimer + player[13], 0]);
-    player[6] = 3;                // Player state to dead
-    player[8] -= 1;               // Remove a life
-    player[12] = stateTimer + 2;  // Calculate when respawn
+    explosions.push([player[iPlayer][0], player[iPlayer][1], stateTimer + player[iPlayer][13], 0]);
+    player[iPlayer][6] = 3;                // Player state to dead
+    player[iPlayer][8] -= 1;               // Remove a life
+    player[iPlayer][12] = stateTimer + 2;  // Calculate when respawn
   }
 }
 
-function _enemyCollidesWithPlayer(){
-
-}
-
-function enemyDestroy(i){
+function enemyDestroy(iEnemy, iPlayer){
   soundPlayer[4].play();
-  player[11] += 10;
-  explosions.push([enemies[i][0], enemies[i][1], stateTimer + 1, 0]);
-  enemies.splice(i, 1);
+  player[iPlayer][11] += 10;
+  explosions.push([enemies[iEnemy][0], enemies[iEnemy][1], stateTimer + 1, 0]);
+  enemies.splice(iEnemy, 1);
 }
 
 function enemyDraw(e){

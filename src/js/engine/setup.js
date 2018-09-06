@@ -25,8 +25,9 @@ GAME_Y_MARGIN = GAME_MARGIN,
 GAME_INC_PADDING = 80,
 W = FW - 2 * GAME_MARGIN,
 H = FH - 2 * GAME_Y_MARGIN,
-borderLength = 2*(W+H+2*GAME_INC_PADDING)
-DEBUG = true;
+borderLength = 2*(W+H+2*GAME_INC_PADDING),
+localStorageId = 'tvio-js13k-2018',
+DEBUG = false;
 
 /* DOM setup */
 d.style.webkitTransformOrigin = d.style.transformOrigin = "0 0";

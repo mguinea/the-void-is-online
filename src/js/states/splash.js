@@ -7,8 +7,8 @@ var splashState = {
     if(DEBUG){
         setState(gameState);
     }
-    
-    if(stateTimer > 3){
+
+    if(stateTimer > 0.3){
       setState(menuState);
     }
   },

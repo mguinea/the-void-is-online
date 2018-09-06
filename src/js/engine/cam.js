@@ -4,7 +4,7 @@ var cam = [0, 0], // 0: x, 1: y
 
 function camSet(offset){
   camOffset = offset;
-  //trap[0] = player[0] - trap[3] / 2;
+  //trap[0] = player[0][0] - trap[3] / 2;
   //cam[0] = trap[0] - cam[2];
 }
 
