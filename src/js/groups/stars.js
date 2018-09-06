@@ -1,6 +1,7 @@
 var stars = [];
 
 function starsInit(amount){
+  stars = [];
   for(var i = 0; i < amount; ++i){
     var size = srand(1, 3);
     stars.push([srand(0, W), srand(0, H), size, size]);

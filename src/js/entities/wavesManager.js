@@ -1,6 +1,7 @@
 var wavesMoment = [], totalLevelTime = 90, wavesPerLevel = 10;
 
 function wavesManagerInit(){
+  enemies = []; wavesMoment = []; totalLevelTime = 90; wavesPerLevel = 10;
   // Set waves
   // 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
   /* wave

@@ -6,16 +6,23 @@
 4: Go to next state {0: false, 1: true}
 */
 
-var menuData = [0, null, 0.2, 0, 0];
+var menuData = [];
 
 var menuState = {
   init: function(){
     bgColor = colors[0];
+    stateTimer = 0;
 
-    menuData[1] = [
-      [W/2 - 32, 320],
-      [W/2 - 32, 352],
-      [W/2 - 32, 384]
+    menuData = [
+      0,
+      [
+        [W/2 - 32, 320],
+        [W/2 - 32, 352],
+        [W/2 - 32, 384]
+      ],
+      0.2,
+      0,
+      0
     ];
   },
 

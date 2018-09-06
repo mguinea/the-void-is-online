@@ -50,8 +50,8 @@ function sineMovement(a, b, c, d, x){
   return a * ( Math.sin ( b * ( x - c ) ) ) + d;
 }
 
-function processGroup( group, func, params = null ) {
+function processGroup( group, func ) {
   for ( var i = group.length - 1; i >= 0; --i ) {
-    func( group[i], params );
+    func( group[i], i );
   }
 }

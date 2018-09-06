@@ -3,12 +3,30 @@ var camTarget = [0],
 	gameOver = 0,
   gameOverTimer = 0,
   camVelocity = 65; // 65;
+/*
+GameData
+0: state = {0: playing, 1: gameover}
+*/
+var gameData = [];
 
 var gameState = {
   init: function(){
     bgColor = colors[0];
-    gameOver = 0;
-    gameOverTimer = 0;
+    stateTimer = 0;
+
+    gameData = [0];
+
+    camTarget = [0],
+    currentLevel = 0,
+  	gameOver = 0,
+    gameOverTimer = 0,
+    camVelocity = 65;
+
+    // debug
+    players = 2;
+    //
+    
+    playerInit();
 
     wavesManagerInit();
 
@@ -37,7 +55,7 @@ var gameState = {
 		if(players == 1){
 			if(player[8] <= 0 && gameOverTimer == 0){
 				camVelocity = 0;
-				gameOver = 1;
+				gameData[0] = 1;
         gameOverTimer = stateTimer + 3;
 			}
 		}/*else{
@@ -68,7 +86,7 @@ var gameState = {
     playerDraw();
 
 		// Draw game over
-    if(gameOver == 1){
+    if(gameData[0] == 1){
       font ('GAME OVER', W / 2, H / 2, 17, 1, 1);
     }
   }

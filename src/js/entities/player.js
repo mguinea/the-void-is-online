@@ -15,93 +15,94 @@ Player
 12: player respawn (stateTimer + cadence)
 13: player repawn cadence
 */
-var player2= [64, H/2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
-var player = [64, H/2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2],
-  offsetY = 6,
-  playerShipDraws = [
-    [
-  		[-6, 6],
-      [6, 14],
-      [6, 22],
-      [14, 22],
-      [26, 14],
-      [58, 6],
-      [6, 0]
-  	],
-    [
-      [-6, 6],
-      [6, 14],
-      [6, 18],
-      [14, 18],
-      [26, 14],
-      [58, 6],
-      [6, 2]
-  	],
-    [
-      [-6, 6],
-      [6, 14],
-      [6, 24],
-      [14, 24],
-      [26, 14],
-      [58, 6],
-      [26, -2],
-      [14, -6],
-      [6, -6],
-      [6, -2],
-      [-6, 6]
-  	]
-  ],
-  playerShipsDrawIndex = 0;
+var player = [],
+    player2 = [],
+    playerShipDraws = [
+      [
+    		[-6, 6],
+        [6, 14],
+        [6, 22],
+        [14, 22],
+        [26, 14],
+        [58, 6],
+        [6, 0]
+    	],
+      [
+        [-6, 6],
+        [6, 14],
+        [6, 18],
+        [14, 18],
+        [26, 14],
+        [58, 6],
+        [6, 2]
+    	],
+      [
+        [-6, 6],
+        [6, 14],
+        [6, 24],
+        [14, 24],
+        [26, 14],
+        [58, 6],
+        [26, -2],
+        [14, -6],
+        [6, -6],
+        [6, -2],
+        [-6, 6]
+    	]
+    ],
+    playerShipsDrawIndex = 0;
+
+function playerInit(){
+  player = [64, H/4 * 2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+  player2= [64, H/4 * 3, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+}
 
 function playerUpdate(){
-  if(gameOver == 1) return;
+  if(gameData[0] == 1) return;
 
-  // Movement
-  if(player[6] != 3){ // If player is not dead
+  // If player is not dead
+  if(player[6] != 3){
     player[6] = 0;
 
+    // Movement
     if(pressing[87]){ // Up
       player[6] = 1;
-      player[1] -= player[5] * dt;
+      if(player[1] > 32){
+        player[1] -= player[5] * dt;
+      }else{
+        player[1] = 32;
+      }
     }else if(pressing[83]){ // Down
       player[6] = 2;
-      player[1] += player[5] * dt;
+      if(player[1] < H - 160){
+        player[1] += player[5] * dt;
+      }else{
+        player[1] = H - 160;
+      }
     }
 
     if(pressing[65]){ // Left
-      player[0] -= player[5] * dt;
+      if(player[0] > camTarget[0] + 64){
+        player[0] -= player[5] * dt;
+      }else{
+        player[0] =  camTarget[0] + 64;
+      }
+
     }else if(pressing[68]){ // Right
-      player[0] += player[5] * dt;
+      if(player[0] < camTarget[0] + W - 90){
+        player[0] += player[5] * dt;
+      }else{
+        player[0] = camTarget[0] + W - 90;
+      }
     }
 
     // Get damage by enemy contact
-    for(var i = 0; i < enemies.length; ++i){
-      if(AABBCollides(player, enemies[i])){
-        enemyDestroy(i);
-        explosions.push([player[0], player[1], stateTimer + player[13], 0]);
-        soundPlayer[3].play();
-        player[6] = 3;                // Player state to dead
-        player[8] -= 1;               // Remove a life
-        player[12] = stateTimer + 2;  // Calculate when respawn
-      }
-    }
+    processGroup(enemies, enemyCollidesWithPlayer);
 
     // Get damage by enemy projectile
     for(var i = 0; i < enemyProjectiles.length; ++i){
       if(AABBCollides(player, enemyProjectiles[i])){
         // enemyDestroy(i);
-        explosions.push([player[0], player[1], stateTimer + player[13], 0]);
-        soundPlayer[3].play();
-        player[6] = 3;                // Player state to dead
-        player[8] -= 1;               // Remove a life
-        player[12] = stateTimer + 2;  // Calculate when respawn
-      }
-    }
-
-    // Get damage by asteroid
-    for(var i = 0; i < asteroids.length; ++i){
-      if(AABBCollides(player, asteroids[i])){
-        // asteroidDestroy(i);
         explosions.push([player[0], player[1], stateTimer + player[13], 0]);
         soundPlayer[3].play();
         player[6] = 3;                // Player state to dead
@@ -128,8 +129,6 @@ function playerUpdate(){
       player[9] = stateTimer + player[10];
       soundPlayer[5].play();
 
-  		//player[6] = 2;
-      //playerHit();
       playerProjectileShot();
     }
   }
@@ -163,7 +162,7 @@ function playerUpdate(){
 }
 
 function playerDraw(){
-  if(gameOver == 1) return;
+  if(gameData[0] == 1) return;
 
   // If player is not dead
   if(player[6] != 3){

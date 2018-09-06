@@ -1,4 +1,14 @@
-var playerProjectiles = [];
+function playerProjectileDestroy(index){
+  playerProjectiles.splice(index, 1);
+}
+
+function playerProjectileDraw(e){
+  fillRectangle([e[0], e[1], e[2], e[3]], 17);
+}
+
+function playerProjectileShot(){
+  playerProjectiles.push([player[0] + 50, player[1] + 4, 16, 2, 600]);
+}
 
 function playerProjectileUpdate(e, params, i){
   e[0] += e[4] * dt;
@@ -19,16 +29,4 @@ function playerProjectileUpdate(e, params, i){
       playerProjectileDestroy(i);
     }
   }
-}
-
-function playerProjectileDraw(e){
-  fillRectangle([e[0], e[1], e[2], e[3]], 17);
-}
-
-function playerProjectileShot(){
-  playerProjectiles.push([player[0] + 50, player[1] + 4, 16, 2, 600]);
-}
-
-function playerProjectileDestroy(index){
-  playerProjectiles.splice(index, 1);
 }

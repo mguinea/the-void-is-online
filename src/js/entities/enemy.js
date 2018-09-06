@@ -36,8 +36,50 @@ var enemyShapes = [
   ]
 ];
 
+function enemyCollidesWithPlayer(e, i){
+  if(AABBCollides(player, e)){
+    enemyDestroy(i);
+    soundPlayer[3].play();
+    
+    explosions.push([player[0], player[1], stateTimer + player[13], 0]);
+    player[6] = 3;                // Player state to dead
+    player[8] -= 1;               // Remove a life
+    player[12] = stateTimer + 2;  // Calculate when respawn
+  }
+}
+
+function _enemyCollidesWithPlayer(){
+
+}
+
+function enemyDestroy(i){
+  soundPlayer[4].play();
+  player[11] += 10;
+  explosions.push([enemies[i][0], enemies[i][1], stateTimer + 1, 0]);
+  enemies.splice(i, 1);
+}
+
+function enemyDraw(e){
+  if(gameData[0] == 1) return;
+
+  ctx.save();
+  ctx.translate(e[0] - cam[0] - 3, e[1] + 7);
+  setContextAttribute(17, 0);
+  path(enemyShapes[e[4]]);
+  ctx.stroke();
+  ctx.restore();
+
+  if(DEBUG == true){
+    fillRectangle([e[0], e[1], e[2], e[3]], 22, 1);
+  }
+}
+
+function enemyExpires(i){
+  enemies.splice(i, 1);
+}
+
 function enemyUpdate(e){
-  if(gameOver == 1) return;
+  if(gameData[0] == 1) return;
 
   if(e[4] == 0){
     e[0] -= 12 * dt;
@@ -55,30 +97,4 @@ function enemyUpdate(e){
   if(e[0] < 0){
     enemyExpires(e);
   }
-}
-
-function enemyDraw(e){
-  if(gameOver == 1) return;
-
-  ctx.save();
-  ctx.translate(e[0] - cam[0] - 3, e[1] + 7);
-  setContextAttribute(17, 0);
-  path(enemyShapes[e[4]]);
-  ctx.stroke();
-  ctx.restore();
-
-  if(DEBUG == true){
-    fillRectangle([e[0], e[1], e[2], e[3]], 22, 1);
-  }
-}
-
-function enemyDestroy(i){
-  soundPlayer[4].play();
-  player[11] += 10;
-  explosions.push([enemies[i][0], enemies[i][1], stateTimer + 1, 0]);
-  enemies.splice(i, 1);
-}
-
-function enemyExpires(i){
-  enemies.splice(i, 1);
 }
