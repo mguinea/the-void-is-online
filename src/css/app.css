@@ -1,0 +1,26 @@
+/*
+body{
+  background:#222;
+  margin:0;
+  padding:0;
+}
+
+#c{
+  height:100vh;
+  margin:auto;
+  display:block;
+  image-rendering: optimizeSpeed;             // Older versions of FF
+  image-rendering: -moz-crisp-edges;          // FF 6.0+
+  image-rendering: -webkit-optimize-contrast; // Safari
+  image-rendering: -o-crisp-edges;            // OS X & Windows Opera (12.02+)
+  image-rendering: pixelated;                 // Awesome future-browsers
+  -ms-interpolation-mode: nearest-neighbor;   // IE
+}
+*/
+body {background:#000;margin:0;padding:0;}
+canvas {display:none;}
+#c{height:100vh;margin:auto;display:block;}
+.button { background-color: #2c3e50;border: none;padding: 12px 18px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; }
+.button:hover{ background-color:#ecf0f1; }
+#f{font-family:sans-serif;position:absolute;bottom:10px;left:10px;font-size:18px;color:#ecf0f1;text-decoration:none;}
+#f:hover{color:#2c3e50;}

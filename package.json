@@ -1,0 +1,23 @@
+{
+  "name": "attack-on-server",
+  "version": "1.0.0",
+  "description": "Entry for js13k 2018 compo",
+  "main": "index.html",
+  "scripts": {},
+  "author": "Marc Guinea",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-rimraf": "^0.2.1",
+    "gulp-terser": "^1.0.1",
+    "gulp-unzip": "^0.2.0",
+    "gulp-util": "^3.0.8",
+    "gulp-zip": "^4.0.0"
+  }
+}
