@@ -3,10 +3,11 @@ function setContextAttribute(index, attribute, custom){
 }
 
 // Draw functions
+/*
 function drawLine(x, y, r, l, w){
 	ctx.save();
 	ctx.lineWidth = w;
-	ctx.translate(x-cam[0], y-cam[1]);
+	ctx.translate(x, y);
 	ctx.beginPath();
 
 	var rpx = Math.cos( (r).toRad() ) * l,
@@ -14,6 +15,20 @@ function drawLine(x, y, r, l, w){
 
 	ctx.moveTo(0, 0);
 	ctx.lineTo(rpx, rpy);
+	ctx.stroke();
+	ctx.closePath();
+	ctx.restore();
+}
+//*/
+function drawLine(x1, y1, x2, y2, w = 1, color = 17){
+	ctx.save();
+	ctx.lineWidth = w;
+	setContextAttribute(color, 0);
+	ctx.translate(x1, y1);
+	ctx.beginPath();
+
+	ctx.moveTo(0, 0);
+	ctx.lineTo(x2, y2);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.restore();
@@ -49,10 +64,11 @@ function strokeStaticRectangle(rect, index, size = 1){
 	ctx.restore();
 }
 
-function fillCircle(x, y, r){
+function fillCircle(x, y, r, color = 17){
 	ctx.save();
+	setContextAttribute(color, 1);
 	ctx.beginPath();
-	ctx.translate(x-cam[0], y-cam[1]);
+	ctx.translate(x, y);
 	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
@@ -68,7 +84,7 @@ function strokeCircle(x, y, r){
 	ctx.closePath();
 	ctx.restore();
 }
-
+/*
 function strokePath (x, y, r, pts, d) {
 	ctx.save();
 	ctx.lineJoin = "round";
@@ -90,6 +106,28 @@ function strokePath (x, y, r, pts, d) {
 	ctx.closePath();
 	ctx.restore();
 	return ctx;
+}*/
+
+function strokePath (x, y, pts, noclose, scale = 1) {
+	ctx.save();
+  ctx.translate(x, y);
+  setContextAttribute(17, 0);
+
+  ctx.beginPath();
+  var mv = 1;
+  for (var i = 0; pts && i<pts.length; ++i) {
+    var p = pts[i];
+    if (p) {
+      if (mv) ctx.moveTo(p[0] * scale, p[1] * scale);
+      else ctx.lineTo(p[0] * scale, p[1] * scale);
+      mv = 0;
+    }
+    else mv = 1;
+  }
+  if (!noclose) ctx.closePath();
+
+	ctx.stroke();
+  ctx.restore();
 }
 
 function path (pts, noclose, scale = 1) { // eslint-disable-line no-unused-vars

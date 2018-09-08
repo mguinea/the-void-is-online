@@ -15,7 +15,27 @@ Player
 12: player[0] respawn (stateTimer + cadence)
 13: player[0] repawn cadence
 */
+
+/*
+playerControls
+
+Player 1
+0: Up
+1: Down
+2: Left
+3: Right
+4: Fire / Action
+
+Player 2
+5: Up
+6: Down
+7: Left
+8: Right
+9: Fire / Action
+*/
+
 var player = [[], []],
+    playerControls = []
     playerShipDraws = [
       [
     		[-6, 6],
@@ -52,8 +72,10 @@ var player = [[], []],
     playerShipsDrawIndex = [];
 
 function playerInit(){
-  player[0] = [64, H/6 * 2, 48, 12, 0, 150, 0, 0, 1, 0, 0.2, 0, 0, 2];
-  player[1]= [64, H/6 * 4, 48, 12, 0, 150, 0, 0, 1, 0, 0.2, 0, 0, 2];
+  player[0] = [64, H/6 * 2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+  player[1]= [64, H/6 * 4, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+
+  playerControls = [87];
 }
 
 function playerUpdate(){
@@ -64,7 +86,7 @@ function playerUpdate(){
     player[0][6] = 0;
 
     // Movement
-    if(pressing[87]){ // Up
+    if(pressing[playerControls[0]]){ // Up
       player[0][6] = 1;
       if(player[0][1] > 32){
         player[0][1] -= player[0][5] * dt;
@@ -132,7 +154,7 @@ function playerUpdate(){
   }
 
   // If player[1] is not dead
-  if(player[1][6] != 3){
+  if(player[1][6] != 3 && players == 2){
     player[1][6] = 0;
 
     // Movement
@@ -206,31 +228,33 @@ function playerUpdate(){
     break;
   }
 
-  switch(player[1][6]){
-    case 0:
-      playerShipsDrawIndex[1] = 0;
-    break;
-    case 1:
-      playerShipsDrawIndex[1] = 1;
-    break;
-    case 2:
-      playerShipsDrawIndex[1] = 2;
-    break;
-    case 3:
-      // If player[1] is dead, place in initial position
-      if(player[1][12] < stateTimer && player[8] > 0){
-        player[1][6] = 0;
-        player[1][0] = cam[0] + 64;
-        player[1][1] = H/6 * 4;
-      }
-    break;
-    case 4:
-      playerShipsDrawIndex[1] = 0;
-    break;
-    default:
-      playerShipsDrawIndex[1] = 0;
-    break;
-  }
+	if(players == 2){
+		switch(player[1][6]){
+	    case 0:
+	      playerShipsDrawIndex[1] = 0;
+	    break;
+	    case 1:
+	      playerShipsDrawIndex[1] = 1;
+	    break;
+	    case 2:
+	      playerShipsDrawIndex[1] = 2;
+	    break;
+	    case 3:
+	      // If player[1] is dead, place in initial position
+	      if(player[1][12] < stateTimer && player[8] > 0){
+	        player[1][6] = 0;
+	        player[1][0] = cam[0] + 64;
+	        player[1][1] = H/6 * 4;
+	      }
+	    break;
+	    case 4:
+	      playerShipsDrawIndex[1] = 0;
+	    break;
+	    default:
+	      playerShipsDrawIndex[1] = 0;
+	    break;
+	  }
+	}
 }
 
 function playerDraw(){
@@ -242,6 +266,9 @@ function playerDraw(){
     ctx.translate(player[0][0] - cam[0], player[0][1]);
     setContextAttribute(17, 0);
     setContextAttribute(26, 1);
+    if(gameData[1] == 2){
+      setContextAttribute(16, 0);
+    }
     ctx.lineWidth = 2;
     // ctx.strokeStyle = '#f0f';
     path(playerShipDraws[playerShipsDrawIndex[0]]);

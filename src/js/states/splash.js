@@ -4,12 +4,8 @@ var splashState = {
   },
 
   update: function(){
-    if(DEBUG){
-        setState(gameState);
-    }
-
     if(stateTimer > 0.3){
-      setState(menuState);
+      setState(pathState);
     }
   },
 

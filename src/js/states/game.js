@@ -6,7 +6,11 @@ var camTarget = [0],
 /*
 GameData
 0: state = {0: playing, 1: gameover}
+1: Options (style) = {0: simple, 1: Vectrex Scramble, 2: Colorful}
+2: Options (volume) = {0-100}
 */
+
+
 var gameData = [];
 
 var gameState = {
@@ -14,7 +18,7 @@ var gameState = {
     bgColor = colors[0];
     stateTimer = 0;
 
-    gameData = [0];
+    gameData = [0, 0];
 
     camTarget = [0],
     currentLevel = 0,
@@ -32,6 +36,11 @@ var gameState = {
   },
 
   update: function(){
+    // Change style
+    if(keypressed === 114){
+      gameData[1] == 1;
+    }
+
     playerUpdate();
 
     camTarget[0] += camVelocity * dt;
@@ -84,7 +93,6 @@ var gameState = {
     if(gameOverTimer != 0 && gameOverTimer < stateTimer){
       setState(menuState);
     }
-
     // Cam update
     camFocus(camTarget);
   },
@@ -100,6 +108,17 @@ var gameState = {
 
     playerHUDDraw();
     playerDraw();
+
+    if(gameData[1] == 1){
+      ctx.save();
+      ctx.globalAlpha = 0.2;
+      fillStaticRectangle([0, 0, W, H/4], 21);
+      fillStaticRectangle([0, H/4, W, 3], 12);
+
+      fillStaticRectangle([0, H - H/4 - 3, W, 3], 12);
+      fillStaticRectangle([0, H - H/4, W, H/4], 22);
+      ctx.restore();
+    }
 
 		// Draw game over
     if(gameData[0] == 1){

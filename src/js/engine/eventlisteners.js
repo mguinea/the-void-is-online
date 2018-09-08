@@ -1,9 +1,11 @@
-/*document.addEventListener('keypress', function(e){
-  if(!(e.key in keysdown)) {
-    keysdown[e.key] = true;
-    // key first pressed
+/*
+document.addEventListener('keypress', function(e){
+  if(e.keyCode == 114){
+    e.preventDefault();
   }
-}, false);*/
+  keypressed = e.keyCode;
+}, false);
+//*/
 
 document.addEventListener('keydown',function(e){
   lastPress = e.keyCode;
@@ -14,7 +16,7 @@ document.addEventListener('keydown',function(e){
 
 document.addEventListener('keyup',function(e){
   pressing[e.keyCode] = false;
-
+  keypressed = null;
 //  delete keysdown[e.key];
   // e.preventDefault();
 }, false);

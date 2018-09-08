@@ -2,16 +2,14 @@ var wavesMoment = [], totalLevelTime = 90, wavesPerLevel = 10;
 
 function wavesManagerInit(){
   enemies = []; wavesMoment = []; totalLevelTime = 90; wavesPerLevel = 10;
-  // Set waves
+
   // 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
-  /* wave
-    0: Time when spawn
-    1: Units to spawn
-    2: Units type
-  */
+
   var frequency = totalLevelTime / wavesPerLevel;
   for(var i = 0; i < wavesPerLevel; ++i){
-    wavesMoment.push([i * frequency, (~~srand(2, 6)), 1]);
+    /* 0: Time when spawn, 1: Units to spawn, 2: Units type */
+    var type = 2; // (~~srand(0, 3));
+    wavesMoment.push([i * frequency, (~~srand(4, 8)), type]);
   }
 
   // bosses.push([W-64, H/2, 100, 100, 10]);
@@ -29,7 +27,7 @@ function wavesManagerSpawner(){
   // If there is a wave, spawn it
   if(wave !== null){
     for(var i = 0; i < wave[1]; ++i){
-      enemies.push([W + camTarget[0] + (i * 48), srand(16, H - 16), 32, 20, wave[2]]);
+      enemies.push([W + camTarget[0] + (i * 48), /*srand(16, H - 160)*/ H / 2, 32, 20, wave[2]]);
     }
   }
 

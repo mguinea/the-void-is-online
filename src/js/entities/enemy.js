@@ -7,7 +7,8 @@ Enemy
 4: type
 5: damage
 6: cadency
-7: type // defines draw and behaviour
+7: init time
+8: end time
 */
 
 var enemyShapes = [
@@ -27,12 +28,12 @@ var enemyShapes = [
     [0, 0]
   ],
   [
-    [0*4, 0*4],
-    [12*4, -6*4],
-    [24*4, -6*4],
-    [36*4, 0*4],
-    [24*4, 12*4],
-    [12*4, 12*4]
+    [0, 0],
+    [12, -6],
+    [24, -6],
+    [36, 0],
+    [24, 12],
+    [12, 12]
   ]
 ];
 
@@ -55,14 +56,21 @@ function enemyDestroy(iEnemy, iPlayer){
 }
 
 function enemyDraw(e){
+  // If game over...
   if(gameData[0] == 1) return;
 
-  ctx.save();
-  ctx.translate(e[0] - cam[0] - 3, e[1] + 7);
-  setContextAttribute(17, 0);
-  path(enemyShapes[e[4]]);
-  ctx.stroke();
-  ctx.restore();
+  // Show
+  switch(e[4]){
+    case 0:
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[0]);
+    break;
+    case 1:
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[1]);
+    break;
+    case 2:
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[2]);
+    break;
+  }
 
   if(DEBUG == true){
     fillRectangle([e[0], e[1], e[2], e[3]], 22, 1);
@@ -73,23 +81,40 @@ function enemyExpires(i){
   enemies.splice(i, 1);
 }
 
-function enemyUpdate(e){
+function enemyUpdate(e, i){
+  // If game over...
   if(gameData[0] == 1) return;
 
-  if(e[4] == 0){
-    e[0] -= 12 * dt;
-    /*
-    A = Amplitude (Tallness) of the wave.
-    B = How many waves there are for each cycle.
-    C = How far to shift the wave’s X position.
-    D = How far to shift the wave’s Y position.
-    */
-    e[1] = sineMovement(64, 0.1, 0, H / 2, e[0]);
-  }else if(e[4] == 1){
-    e[0] -= 256 * dt;
-  }
   // Any enemy with X < 0 expires
+  /*
   if(e[0] < 0){
-    enemyExpires(e);
+    enemyExpires(i);
   }
+  //*/
+
+  // Behaviour
+  switch(e[4]){
+    case 0:
+      e[0] -= 12 * dt;
+      /*
+      A = Amplitude (Tallness) of the wave.
+      B = How many waves there are for each cycle.
+      C = How far to shift the wave’s X position.
+      D = How far to shift the wave’s Y position.
+      */
+      e[1] = sineMovement(80, 0.2, 0, H / 2, e[0]);
+    break;
+    case 1:
+      e[0] -= 256 * dt;
+    break;
+    case 2:
+      e[0] -= 128 * dt;
+    break;
+  }
+}
+
+function movementOne(time){
+  var x = 0;
+  var y = 0;
+  return [x, y];
 }

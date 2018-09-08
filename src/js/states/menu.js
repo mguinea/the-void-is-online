@@ -5,6 +5,8 @@
 3: Change next time
 4: Go to next state {0: false, 1: true}
 5: High Score
+6: High Score Player
+7: Menu Screen {0: intial, 1: options, 2: control map, 3: ?}
 */
 
 var menuData = [];
@@ -25,7 +27,8 @@ var menuState = {
       0,
       0,
       storageGet('hi', 0),
-      storageGet('hip', '')
+      storageGet('hip', ''),
+      0
     ];
   },
 
@@ -54,7 +57,7 @@ var menuState = {
 
     if(menuData[4] == 1 && menuData[3] < stateTimer){
       players = menuData[0] + 1;
-      setState(gameState);
+      setState(pathState);
     }
   },
 
@@ -62,16 +65,18 @@ var menuState = {
     font ('JS13K 2018', W/2, 64, 17, 1, 0);
     font ('THE VOID IS ONLINE', W/2, 128, 17, 2, 0, 'round', 7);
 
-    font ('HI ' + menuData[6] + ' ' + padLeft(menuData[5], 7, 0), W/2, 256, 17, 1, 0);
+    if(menuData[7] == 0){
+      font ('HI ' + menuData[6] + ' ' + padLeft(menuData[5], 7, 0), W/2, 256, 17, 1, 0);
 
-    font ('1 PLAYER', menuData[1][0][0], menuData[1][0][1], 17, 1, 1);
-    font ('2 PLAYERS', menuData[1][1][0], menuData[1][1][1], 17, 1, 1);
-    font ('OPTIONS', menuData[1][2][0], menuData[1][2][1], 17, 1, 1);
-    if(menuData[4] == 0){
-      playerMenuDraw(menuData[1][menuData[0]][0] - 80, menuData[1][menuData[0]][1]);
-    }else{
-      if( (~~(stateTimer * 10) % 2) == 1){
+      font ('1 PLAYER', menuData[1][0][0], menuData[1][0][1], 17, 1, 1);
+      font ('2 PLAYERS', menuData[1][1][0], menuData[1][1][1], 17, 1, 1);
+      font ('OPTIONS', menuData[1][2][0], menuData[1][2][1], 17, 1, 1);
+      if(menuData[4] == 0){
         playerMenuDraw(menuData[1][menuData[0]][0] - 80, menuData[1][menuData[0]][1]);
+      }else{
+        if( (~~(stateTimer * 10) % 2) == 1){
+          playerMenuDraw(menuData[1][menuData[0]][0] - 80, menuData[1][menuData[0]][1]);
+        }
       }
     }
   }
