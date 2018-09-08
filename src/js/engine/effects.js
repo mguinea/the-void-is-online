@@ -24,7 +24,7 @@ function drawPostProcessing () {
   // CRT
   setFrameBuffer(fbo1, textureGame, crtShader);
   // Glow
-  // setFrameBuffer(fbo2, glGetFBOTexture(fbo1), glowShader);
+  setFrameBuffer(fbo2, glGetFBOTexture(fbo1), glowShader);
   // Final draw
   gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   gl.drawArrays(gl.TRIANGLES, 0, 6);

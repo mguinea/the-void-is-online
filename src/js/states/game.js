@@ -18,7 +18,7 @@ var gameState = {
     bgColor = colors[0];
     stateTimer = 0;
 
-    gameData = [0, 0];
+    gameData = [0, 2];
 
     camTarget = [0],
     currentLevel = 0,
