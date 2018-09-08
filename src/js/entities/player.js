@@ -214,7 +214,7 @@ function playerUpdate(){
     break;
     case 3:
       // If player[0] is dead, place in initial position
-      if(player[0][12] < stateTimer && player[8] > 0){
+      if(player[0][12] < stateTimer && player[0][8] > 0){
         player[0][6] = 0;
         player[0][0] = cam[0] + 64;
         player[0][1] = H/6 * 2;
