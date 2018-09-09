@@ -11,6 +11,8 @@ https://www.html5canvastutorials.com/tutorials/html5-canvas-line-joins/
 
 https://pomax.github.io/bezierinfo/ ???
 https://stackoverflow.com/questions/17083580/i-want-to-do-animation-of-an-object-along-a-particular-path
+
+ // ~~(elapsedTime * framesPerSecond) % totalFrames)
 # TODO
 - Menu screen
   - Select path

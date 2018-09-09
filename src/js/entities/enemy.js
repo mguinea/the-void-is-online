@@ -86,16 +86,14 @@ function enemyUpdate(e, i){
   if(gameData[0] == 1) return;
 
   // Any enemy with X < 0 expires
-  /*
-  if(e[0] < 0){
+  if(e[0] < camTarget[0]){
     enemyExpires(i);
   }
-  //*/
 
   // Behaviour
   switch(e[4]){
     case 0:
-      e[0] -= 12 * dt;
+      e[0] -= 16 * dt;
       /*
       A = Amplitude (Tallness) of the wave.
       B = How many waves there are for each cycle.
@@ -105,10 +103,10 @@ function enemyUpdate(e, i){
       e[1] = sineMovement(80, 0.2, 0, H / 2, e[0]);
     break;
     case 1:
-      e[0] -= 256 * dt;
+      e[0] -= 350 * dt;
     break;
     case 2:
-      e[0] -= 128 * dt;
+      e[0] -= 256  * dt;
     break;
   }
 }

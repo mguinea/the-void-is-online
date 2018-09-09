@@ -41,7 +41,7 @@ function explosionUpdate(e, params, i){
   if(e[2] < stateTimer){
     explosions.splice(i, 1);
   }
-  // ~~(elapsedTime * framesPerSecond) % totalFrames)
+
   e[3] = ~~((stateTimer * 10) % 2);
 }
 

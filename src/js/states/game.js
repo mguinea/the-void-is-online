@@ -8,8 +8,9 @@ GameData
 0: state = {0: playing, 1: gameover}
 1: Options (style) = {0: simple, 1: Vectrex Scramble, 2: Colorful}
 2: Options (volume) = {0-100}
+3: state level : {0: playing, 1: finished, 2: boss}
+4: timer when go to path state
 */
-
 
 var gameData = [];
 
@@ -18,7 +19,7 @@ var gameState = {
     bgColor = colors[0];
     stateTimer = 0;
 
-    gameData = [0, 2];
+    gameData = [0, 2, 100, 0, null];
 
     camTarget = [0],
     currentLevel = 0,
@@ -36,10 +37,7 @@ var gameState = {
   },
 
   update: function(){
-    // Change style
-    if(keypressed === 114){
-      gameData[1] == 1;
-    }
+    console.log(playerProjectiles[0].length);
 
     playerUpdate();
 
@@ -56,6 +54,18 @@ var gameState = {
     processGroup(playerProjectiles[1], playerProjectileUpdate, 1);
     processGroup(powerups, powerupUpdate);
     processGroup(stars, starUpdate);
+
+    switch(gameData[3]){
+      case 0:
+        camVelocity = 65;
+      break;
+      case 1:
+        camVelocity = 65;
+      break;
+      case 2:
+        camVelocity = 0;
+      break;
+    }
 
 		// Check if game over
 		if(players == 1){
@@ -90,6 +100,11 @@ var gameState = {
 			}
 		}
 
+    if(gameData[4] !== null && gameData[4] < stateTimer){
+      // set next level for path selection
+      setState(pathState);
+    }
+
     if(gameOverTimer != 0 && gameOverTimer < stateTimer){
       setState(menuState);
     }
@@ -120,9 +135,19 @@ var gameState = {
       ctx.restore();
     }
 
+    switch(gameData[3]){
+      case 0:
+      break;
+      case 1:
+          font ('LEVEL COMPLETED!', W/2, H/2-32, 17, 3, 0, 'round', 3);
+      break;
+      case 2:
+      break;
+    }
+
 		// Draw game over
     if(gameData[0] == 1){
-      font ('GAME OVER', W / 2, H / 2, 17, 1, 1);
+      font ('GAME OVER', W / 2, 256, 17, 1, 1);
     }
   }
 };

@@ -17,10 +17,19 @@ function playerProjectileUpdate(projectile, iProjectile, iPlayer){
   if(projectile[0] > camTarget[0] + W){
     playerProjectileDestroy(iProjectile, iPlayer);
   }
+
   // Collides with enemy
   for(var i = 0; i < enemies.length; ++i){
     if(AABBCollides(projectile, enemies[i])){
       enemyDestroy(i, iPlayer);
+      playerProjectileDestroy(iProjectile, iPlayer);
+    }
+  }
+
+  // Collides with boss
+  for(var i = 0; i < bosses.length; ++i){
+    if(AABBCollides(projectile, bosses[i])){
+      bossDamage(i, iPlayer);
       playerProjectileDestroy(iProjectile, iPlayer);
     }
   }

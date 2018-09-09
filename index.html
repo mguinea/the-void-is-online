@@ -31,7 +31,7 @@
            vec4 col_r = texture2D(tex, uv + vec2((-15. / dim.x) * rand, 0));
            //glow
            for (int i = 0; i <9; i++) {
-             float miw = float(mod(float(i), 10.)); // change hardcoded value to change glow
+             float miw = float(mod(float(i), 3.)); // change hardcoded value to change glow
              float idw = float(i / 3);
              vec2 v1 = vec2(pos.x + miw, pos.y + idw);
              vec2 v2 = vec2(pos.x - miw, pos.y + idw);
@@ -82,6 +82,7 @@
     <!--<script src="src/js/lib/pixel-font.js"></script>-->
     <script src="src/js/lib/webgl.js"></script>
     <!--<script src="src/js/lib/tween.js"></script>-->
+    <script src="src/js/lib/native.object.extension.js"></script>
     <script src="src/js/lib/utils.js"></script>
     <script src="src/js/lib/pools.js"></script>
     <script src="src/js/lib/utils.draw.js"></script>

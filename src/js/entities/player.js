@@ -72,8 +72,8 @@ var player = [[], []],
     playerShipsDrawIndex = [];
 
 function playerInit(){
-  player[0] = [64, H/6 * 2, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
-  player[1]= [64, H/6 * 4, 48, 12, 0, 150, 0, 0, 3, 0, 0.2, 0, 0, 2];
+  player[0] = [64, H/6 * 2, 48, 12, 0, 150, 0, 0, 3, 0, 0.4, 0, 0, 2];
+  player[1]= [64, H/6 * 4, 48, 12, 0, 150, 0, 0, 3, 0, 0.4, 0, 0, 2];
 
   playerControls = [87];
 }
@@ -119,6 +119,9 @@ function playerUpdate(){
 
     // Get damage by enemy contact
     processGroup(enemies, enemyCollidesWithPlayer, 0);
+
+    // Get damage by boss contact
+    processGroup(bosses, bossCollidesWithPlayer, 0);
 
     // Get damage by enemy projectile
     for(var i = 0; i < enemyProjectiles.length; ++i){
@@ -191,6 +194,9 @@ function playerUpdate(){
 
     // Get damage by enemy contact
     processGroup(enemies, enemyCollidesWithPlayer, 1);
+
+    // Get damage by boss contact
+    processGroup(bosses, bossCollidesWithPlayer, 0);
 
     // Attack
     if(pressing[80] && player[1][9] < stateTimer){
