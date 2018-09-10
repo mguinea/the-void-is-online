@@ -1,11 +1,11 @@
 var splashState = {
   init: function(){
-    bgColor = '#000';
+    bgColor = colors[0];
   },
 
   update: function(){
     if(stateTimer > 0){
-      setState(gameState);
+      setState(menuState);
     }
   },
 

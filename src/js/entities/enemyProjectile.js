@@ -1,27 +1,21 @@
-function enemyProjectileDestroy(iProjectile, iEnemy){
+function enemyProjectileDestroy(iProjectile){
   enemyProjectiles.splice(iProjectile, 1);
 }
 
 function enemyProjectileDraw(projectile){
-  fillRectangle([projectile[0], projectile[1], projectile[2], projectile[3]], 17);
+  fillCircle(projectile[0], projectile[1], 3, 17);
 }
 
-function enemyProjectileShot(iEnemy){
-  enemyProjectiles.push([enemy[iEnemy][0] - 50, enemy[iEnemy][1] - 4, 16, 2, 200]);
+function enemyProjectileShot(enemy, iEnemy){
+  soundPlayer[8].play();
+  enemyProjectiles.push([enemy[0] + 8, enemy[1] + 8, 16, 2, 300]);
 }
 
 function enemyProjectileUpdate(projectile, iProjectile, iPlayer){
-  projectile[0] += projectile[4] * dt;
+  projectile[0] -= projectile[4] * dt;
 
   // End of screen view
-  if(projectile[0] > camTarget[0] + W){
-    enemyProjectileDestroy(iProjectile, iPlayer);
-  }
-  // Collides with player
-  for(var i = 0; i < enemies.length; ++i){
-    if(AABBCollides(projectile, enemies[i])){
-      enemyDestroy(i, iPlayer);
-      enemyProjectileDestroy(iProjectile, iPlayer);
-    }
+  if(projectile[0] < camTarget[0]){
+    enemyProjectileDestroy(iProjectile);
   }
 }

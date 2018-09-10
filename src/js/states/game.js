@@ -37,8 +37,6 @@ var gameState = {
   },
 
   update: function(){
-    console.log(playerProjectiles[0].length);
-
     playerUpdate();
 
     camTarget[0] += camVelocity * dt;
@@ -49,6 +47,7 @@ var gameState = {
 
     processGroup(bosses, bossUpdate);
     processGroup(enemies, enemyUpdate);
+    processGroup(enemyProjectiles, enemyProjectileUpdate);
     processGroup(explosions, explosionUpdate);
     processGroup(playerProjectiles[0], playerProjectileUpdate, 0);
     processGroup(playerProjectiles[1], playerProjectileUpdate, 1);
@@ -115,6 +114,7 @@ var gameState = {
   draw: function(){
     processGroup(bosses, bossDraw);
     processGroup(enemies, enemyDraw);
+    processGroup(enemyProjectiles, enemyProjectileDraw);
     processGroup(explosions, explosionDraw);
     processGroup(playerProjectiles[0], playerProjectileDraw);
     processGroup(playerProjectiles[1], playerProjectileDraw);

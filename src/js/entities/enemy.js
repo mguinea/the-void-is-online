@@ -106,7 +106,13 @@ function enemyUpdate(e, i){
       e[0] -= 350 * dt;
     break;
     case 2:
-      e[0] -= 256  * dt;
+      e[0] -= 64  * dt;
+
+      // Shot
+      if(e[7] < stateTimer && e[0] < camTarget[0] + W - 64){
+        enemyProjectileShot(e, i);
+        e[7] = stateTimer + e[6];
+      }
     break;
   }
 }

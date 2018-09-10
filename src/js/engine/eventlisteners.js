@@ -7,18 +7,31 @@ document.addEventListener('keypress', function(e){
 }, false);
 //*/
 
+function keyPressedOnce(keyCode){
+  if(keyPressed[keyCode] == true && keyPressedAvailable[keyCode] == true){
+    keyPressed[keyCode] = false;
+    keyPressedAvailable[keyCode] = false;
+    return true;
+  }
+}
+
 document.addEventListener('keydown',function(e){
   lastPress = e.keyCode;
   pressing[e.keyCode] = true;
-  // console.log(lastPress);
-  // e.preventDefault();
+
+  if(keyPressedAvailable[e.keyCode] == true || keyPressedAvailable[e.keyCode] == null){
+    keyPressed[e.keyCode] = true;
+    keyPressedAvailable[e.keyCode] = true;
+  }
+
 }, false);
 
 document.addEventListener('keyup',function(e){
   pressing[e.keyCode] = false;
-  keypressed = null;
-//  delete keysdown[e.key];
-  // e.preventDefault();
+
+  keyPressed[e.keyCode] = false;
+  keyPressedAvailable[e.keyCode] = true;
+
 }, false);
 
 window.addEventListener("load", init, false);

@@ -68,7 +68,7 @@ function fillCircle(x, y, r, color = 17){
 	ctx.save();
 	setContextAttribute(color, 1);
 	ctx.beginPath();
-	ctx.translate(x, y);
+	ctx.translate(x - cam[0], y);
 	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
