@@ -2,19 +2,18 @@
 0: current position (column)
 1: selected point (index)
 2: path is auto = 0 or selectable = 1
-3: flag for enter
+3: -
 4: when to change state
 */
 
-var pathData = [2, 2, [0, 0, 1, 0, 0, 1, 0], 0, null];
+var pathData = [2, 2, [0, 0, 1, 0, 0, 1, 0], null, null];
 var r = 0, up = pathData[1], down = pathData[1] + 1;
 
 var pathState = {
   init: function(){
     bgColor = colors[0];
     stateTimer = 0;
-    pathData[3] = 0;
-    pathData[4] = null;
+    pathData = [2, 2, [0, 0, 1, 0, 0, 1, 0], null, null];
 
     limitDown = pathData[1] - 1;
     limitUp = pathData[1] + 1;
@@ -22,29 +21,28 @@ var pathState = {
 
   update: function(){
     r = (~~(stateTimer * 30) % 12);
-    if(pathData[2][pathData[0]] == 1){
-      if(pressing[87] || pressing[38]){ // Up
-        if(pathData[1] > up){
-          pathData[1] = up;
-          soundPlayer[1].play();
-        }
-      }else if(pressing[83] || pressing[40]){ // Down
-        if(pathData[1] < down){
-          pathData[1] = down;
-          soundPlayer[1].play();
+    if(pathData[4] == null){
+      if(pathData[2][pathData[0]] == 1){
+        if(pressing[87] || pressing[38]){ // Up
+          if(pathData[1] > up){
+            pathData[1] = up;
+            soundPlayer[1].play();
+          }
+        }else if(pressing[83] || pressing[40]){ // Down
+          if(pathData[1] < down){
+            pathData[1] = down;
+            soundPlayer[1].play();
+          }
         }
       }
     }
 
-    if(pathData[3] == 0){
-      if(pressing[13]){
-        pathData[3] = 1;
-        menuData[4] = stateTimer + 1;
-        soundPlayer[2].play();
-      }
+    if(keyPressedOnce(13)){
+      pathData[4] = stateTimer + 1;
+      soundPlayer[2].play();
     }
 
-    if(menuData[4] < stateTimer){
+    if(pathData[4] != null && pathData[4] < stateTimer){
       setState(gameState);
     }
   },
@@ -55,10 +53,9 @@ var pathState = {
 
     font (selectPointTitle(pathData[1]), W/2, 190, 17, 2, 0, 'round', 1);
 
-    if(menuData[4] != null && (~~(stateTimer * 60) % 6) == 1){
-      // ~~(elapsedTime * framesPerSecond) % totalFrames)
+    if(pathData[4] == null){
       font ('PRESS ENTER', W/2, H - 200, 17, 1, 0, 'round', 1);
-    }else if(menuData[4] == null){
+    }else if( (~~(stateTimer * 10) % 2) == 1 ){
       font ('PRESS ENTER', W/2, H - 200, 17, 1, 0, 'round', 1);
     }
 

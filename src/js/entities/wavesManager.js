@@ -9,7 +9,7 @@ function wavesManagerInit(){
   totalLevelTime
   wavesPerLevel*/
   var frequency = totalLevelTime / wavesPerLevel;
-  
+
   // 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
   for(var i = 0; i < wavesPerLevel; ++i){
     var type = (~~srand(0, 3));

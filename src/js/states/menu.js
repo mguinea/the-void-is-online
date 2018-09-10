@@ -48,20 +48,10 @@ var menuState = {
         }
       }
 
-      /*
-      if(pressing[13]){
-        menuData[4] = 1;
-        menuData[3] = stateTimer + 1;
-        soundPlayer[2].play();
-      }
-      //*/
       if(keyPressedOnce(13)){
-        console.log('enter pressed');
-        /*
         menuData[4] = 1;
         menuData[3] = stateTimer + 1;
         soundPlayer[2].play();
-        //*/
       }
     }
 
