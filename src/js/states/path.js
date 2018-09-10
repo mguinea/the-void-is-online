@@ -6,14 +6,13 @@
 4: when to change state
 */
 
-var pathData = [2, 2, [0, 0, 1, 0, 0, 1, 0], null, null];
+var pathData = [0, 0, [0, 0, 1, 0, 0, 1, 0], null, null];
 var r = 0, up = pathData[1], down = pathData[1] + 1;
 
 var pathState = {
   init: function(){
     bgColor = colors[0];
     stateTimer = 0;
-    pathData = [2, 2, [0, 0, 1, 0, 0, 1, 0], null, null];
 
     limitDown = pathData[1] - 1;
     limitUp = pathData[1] + 1;

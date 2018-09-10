@@ -1,16 +1,40 @@
 var wavesMoment = [], totalLevelTime = 0, wavesPerLevel = 0;
 
 function wavesManagerInit(){
-  enemies = []; wavesMoment = []; totalLevelTime = 90; wavesPerLevel = 15;
+  wavesMoment = []; totalLevelTime = 90; wavesPerLevel = 15;
+  var frequency = totalLevelTime / wavesPerLevel; // 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
 
   // Depending on pathData[1] (level), we will spawn different type of enemies / asteroids and bosses
+  var wavesConfiguration = [];
+  switch(pathData[1]){
+    case 0:
+    break;
+    case 1:
+    break;
+    case 2:
+    break;
+    case 3:
+    break;
+    case 4:
+    break;
+    case 5:
+    break;
+    case 6:
+    break;
+    case 7:
+    break;
+    case 8:
+    break;
+    case 9:
+    break;
+  }
   /*wavesMoment
   enemyTypes
   totalLevelTime
   wavesPerLevel*/
-  var frequency = totalLevelTime / wavesPerLevel;
 
-  // 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
+
+
   for(var i = 0; i < wavesPerLevel; ++i){
     var type = (~~srand(0, 3));
     /* 0: Time when spawn, 1: Units to spawn, 2: Units type */

@@ -268,34 +268,13 @@ function playerDraw(){
 
   // If player[0] is not dead
   if(player[0][6] != 3){
-    ctx.save();
-    ctx.translate(player[0][0] - cam[0], player[0][1]);
-    setContextAttribute(17, 0);
-    setContextAttribute(26, 1);
-    if(gameData[1] == 2){
-      setContextAttribute(16, 0);
-    }
-    ctx.lineWidth = 2;
-    // ctx.strokeStyle = '#f0f';
-    path(playerShipDraws[playerShipsDrawIndex[0]]);
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
+    strokePath (player[0][0] - cam[0], player[0][1], playerShipDraws[playerShipsDrawIndex[0]], false, 1, 16);
   }
 
   // If player[1] is not dead
   if(players == 2){
     if(player[1][6] != 3){
-      ctx.save();
-      ctx.translate(player[1][0] - cam[0], player[1][1]);
-      setContextAttribute(17, 0);
-      setContextAttribute(26, 1);
-      ctx.lineWidth = 2;
-      // ctx.strokeStyle = '#f0f';
-      path(playerShipDraws[playerShipsDrawIndex[1]]);
-      ctx.stroke();
-      ctx.fill();
-      ctx.restore();
+      strokePath (player[1][0] - cam[0], player[1][1], playerShipDraws[playerShipsDrawIndex[1]], false, 1, 6);
     }
   }
 }

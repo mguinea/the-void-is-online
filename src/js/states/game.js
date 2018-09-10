@@ -78,6 +78,10 @@ var gameState = {
           storageSet('hi', player[0][11]);
           storageSet('hip', 'PLAYER 1');
         }
+        // Reset path state
+        pathData = [0, 0, [0, 0, 1, 0, 0, 1, 0], null, null];
+        // Reset seed
+        seed = 1;
 			}
 		}else if(players == 2){
 			if(player[0][8] <= 0 && player[1][8] <= 0 && gameOverTimer == 0){
@@ -96,6 +100,10 @@ var gameState = {
           storageSet('hi', player[1][11]);
           storageSet('hip', 'PLAYER 2');
         }
+        // Reset path state
+        pathData = [0, 0, [0, 0, 1, 0, 0, 1, 0], null, null];
+        // Reset seed
+        seed = 1;
 			}
 		}
 

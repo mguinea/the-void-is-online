@@ -23,6 +23,7 @@ function drawLine(x, y, r, l, w){
 function drawLine(x1, y1, x2, y2, w = 1, color = 17){
 	ctx.save();
 	ctx.lineWidth = w;
+	if(gameData[1] == 0){color = 17;}
 	setContextAttribute(color, 0);
 	ctx.translate(x1, y1);
 	ctx.beginPath();
@@ -66,6 +67,7 @@ function strokeStaticRectangle(rect, index, size = 1){
 
 function fillCircle(x, y, r, color = 17){
 	ctx.save();
+	if(gameData[1] == 0){color = 17;}
 	setContextAttribute(color, 1);
 	ctx.beginPath();
 	ctx.translate(x - cam[0], y);
@@ -108,11 +110,12 @@ function strokePath (x, y, r, pts, d) {
 	return ctx;
 }*/
 
-function strokePath (x, y, pts, noclose, scale = 1) {
+function strokePath (x, y, pts, noclose, scale = 1, color = 17, lineWidth = 1) {
 	ctx.save();
   ctx.translate(x, y);
-  setContextAttribute(17, 0);
-
+	ctx.lineWidth = lineWidth;
+	if(gameData[1] == 0){color = 17;}
+  setContextAttribute(color, 0);
   ctx.beginPath();
   var mv = 1;
   for (var i = 0; pts && i<pts.length; ++i) {
