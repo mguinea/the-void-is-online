@@ -10,6 +10,7 @@ Enemy
 7: type // defines draw and behaviour
 8: behaviour data [
 9: life (100)
+
 ]
 */
 
@@ -25,7 +26,7 @@ var bossShapes = [
 ];
 
 function bossCollidesWithPlayer(boss, iBoss, iPlayer){
-  if(AABBCollides(player[iPlayer], boss) && god != false){
+  if(AABBCollides(player[iPlayer], boss) && god == false){
     soundPlayer[3].play();
     explosions.push([player[iPlayer][0], player[iPlayer][1], stateTimer + player[iPlayer][13], 0]);
     player[iPlayer][6] = 3;                // Player state to dead
@@ -60,8 +61,16 @@ function bossUpdate(e, iBoss){
 
   switch(e[7]){
     case 0:
-      var length = 10, rotation = (~~(stateTimer * 60) % 360), bounce = Math.cos( (rotation).toRad() ) * length;
-      e[0] += bounce;
+      //var length = 10, rotation = (~~(stateTimer * 60) % 360), bounce = Math.cos( (rotation).toRad() ) * length;
+      //e[0] += bounce;
+
+      /*
+      A = Amplitude (Tallness) of the wave.
+      B = How many waves there are for each cycle.
+      C = How far to shift the wave’s X position.
+      D = How far to shift the wave’s Y position.
+      */
+      e[0] = sineMovement(W, 1, 0, 500, stateTimer);
     break;
   }
 }
@@ -77,5 +86,7 @@ function bossDraw(e){
   strokeStaticRectangle([W/2 + 32, 60, 100, 16], 17);
   fillStaticRectangle([W/2 + 32, 60, e[9], 16], 17);
 
-  strokeRectangle(e, 22);
+  if(DEBUG){
+    strokeRectangle(e, 22);
+  }
 }

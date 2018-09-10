@@ -49,6 +49,17 @@ function enemyCollidesWithPlayer(enemy, iEnemy, iPlayer){
 }
 
 function enemyDestroy(iEnemy, iPlayer){
+  var prob = srand(0, 100);
+  if(prob > 95){
+    powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 3]);
+  }else if(prob > 90){
+    powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 2]);
+  }else if(prob > 85){
+    powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 1]);
+  }else if(prob > 80){
+    powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 0]);
+  }
+
   soundPlayer[4].play();
   player[iPlayer][11] += 10;
   explosions.push([enemies[iEnemy][0], enemies[iEnemy][1], stateTimer + 1, 0]);

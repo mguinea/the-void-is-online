@@ -14,6 +14,8 @@ Player
 11: score
 12: player[0] respawn (stateTimer + cadence)
 13: player[0] repawn cadence
+14: standard = 0, double shot = 1,
+15: friend shot
 */
 
 /*
@@ -72,8 +74,8 @@ var player = [[], []],
     playerShipsDrawIndex = [];
 
 function playerInit(){
-  player[0] = [64, H/6 * 2, 48, 12, 0, 128, 0, 0, 3, 0, 0.3, 0, 0, 2];
-  player[1]= [64, H/6 * 4, 48, 12, 0, 128, 0, 0, 3, 0, 0.3, 0, 0, 2];
+  player[0] = [64, H/6 * 2, 48, 12, 0, 128, 0, 0, 3, 0, 0.3, 0, 0, 2, 0, 0];
+  player[1]= [64, H/6 * 4, 48, 12, 0, 128, 0, 0, 3, 0, 0.3, 0, 0, 2, 0, 0];
 
   playerControls = [87];
 }
@@ -139,13 +141,32 @@ function playerUpdate(){
     // Get powerup
     for(var i = 0; i < powerups.length; ++i){
       if(AABBCollides(player[0], powerups[i])){
+        switch(powerups[i][4]){
+          case 0:
+            // Increase speed
+            if(player[0][5] < 300){
+              player[0][5] += 32;
+            }
+          break;
+          case 1:
+            // Increase life
+            if(player[0][8] < 3){
+              player[0][8]++;
+            }else{
+              player[0][11] += 100;
+            }
+          break;
+          case 2:
+            // Double shot
+            player[0][14] = 1;
+          break;
+          case 3:
+            // friend shot
+            player[0][15] = 1;
+          break;
+        }
         soundPlayer[0].play();
         powerupDestroy(i);
-        // explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
-
-        // player[0][6] = 3;                // Player state to dead
-        // player[0][8] -= 1;               // Remove a life
-        // player[0][12] = stateTimer + 2;  // Calculate when respawn
       }
     }
 
@@ -201,6 +222,39 @@ function playerUpdate(){
       // Get damage by boss contact
       processGroup(bosses, bossCollidesWithPlayer, 0);
     }
+
+    // Get powerup
+    for(var i = 0; i < powerups.length; ++i){
+      if(AABBCollides(player[1], powerups[i])){
+        switch(powerups[i][4]){
+          case 0:
+            // Increase speed
+            if(player[1][5] < 300){
+              player[1][5] += 32;
+            }
+          break;
+          case 1:
+            // Increase life
+            if(player[1][8] < 3){
+              player[1][8]++;
+            }else{
+              player[1][11] += 100;
+            }
+          break;
+          case 2:
+            // Double shot
+            player[1][14] = 1;
+          break;
+          case 3:
+            // friend shot
+            player[1][15] = 1;
+          break;
+        }
+        soundPlayer[0].play();
+        powerupDestroy(i);
+      }
+    }
+
     // Attack
     if(pressing[80] && player[1][9] < stateTimer){
       player[1][9] = stateTimer + player[1][10];
@@ -222,6 +276,10 @@ function playerUpdate(){
       playerShipsDrawIndex[0] = 2;
     break;
     case 3:
+      // Reset defaults, revert all powerups
+      player[0][5] = 128; // velocity
+      player[0][14] = 0; // standard shot
+      player[0][15] = 0;// friend shot
       // If player[0] is dead, place in initial position
       if(player[0][12] < stateTimer && player[0][8] > 0){
         player[0][6] = 0;
@@ -249,6 +307,10 @@ function playerUpdate(){
 	      playerShipsDrawIndex[1] = 2;
 	    break;
 	    case 3:
+        // Reset defaults, revert all powerups
+        player[1][5] = 128; // velocity
+        player[1][14] = false; // double shot
+        player[1][15] = 0;// friend shot
 	      // If player[1] is dead, place in initial position
 	      if(player[1][12] < stateTimer && player[1][8] > 0){
 	        player[1][6] = 0;
@@ -271,12 +333,18 @@ function playerDraw(){
 
   // If player[0] is not dead
   if(player[0][6] != 3){
+    if(player[0][15] == 1){
+      strokePath (player[0][0] - cam[0] - 16, player[0][1] - 32, playerShipDraws[playerShipsDrawIndex[0]], false, 0.5, 16);
+    }
     strokePath (player[0][0] - cam[0], player[0][1], playerShipDraws[playerShipsDrawIndex[0]], false, 1, 16);
   }
 
   // If player[1] is not dead
   if(players == 2){
     if(player[1][6] != 3){
+      if(player[1][15] == 1){
+        strokePath (player[1][0] - cam[0] - 16, player[1][1] - 32, playerShipDraws[playerShipsDrawIndex[1]], false, 0.5, 6);
+      }
       strokePath (player[1][0] - cam[0], player[1][1], playerShipDraws[playerShipsDrawIndex[1]], false, 1, 6);
     }
   }

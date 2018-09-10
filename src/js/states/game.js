@@ -17,9 +17,12 @@ var gameState = {
   init: function(){
     bgColor = colors[0];
     stateTimer = 0;
-
-    gameData = [0, 2, 100, 0, null];
-
+		//powerups.push([256, 256, 52, 32, 3]);
+		enemies = [];
+		wavesMoment = [];
+		bosses = [];
+		gameData = [0, 2, 100, 0, null];
+		
     camTarget = [0],
   	gameOver = 0,
     gameOverTimer = 0,
@@ -60,7 +63,7 @@ var gameState = {
       case 1:
         camVelocity = 65;
 
-        if(gameData[4] !== null && gameData[4] < stateTimer){
+        if(gameData[4] !== null && gameData[4] < stateTimer && pathData[0] < 9){
           // set next level for path selection
 					pathData[0]++; // current level in path state
           setState(pathState);

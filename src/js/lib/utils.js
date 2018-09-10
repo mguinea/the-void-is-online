@@ -1,11 +1,11 @@
 function padLeft(nr, n, str){
     return Array(n-String(nr).length+1).join(str||'0')+nr;
 }
-/*
-function random(min, max){
+
+function rand(min, max){
   return (Math.random() * (max - min) + min);
 }
-*/
+
 function srand(min = null, max = null) {
   var x = Math.sin(seed++) * 10000;
   var r = x - Math.floor(x);

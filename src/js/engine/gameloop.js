@@ -1,10 +1,10 @@
 function gameLoop(){
   currentTime = (new Date()).getTime();
   dt = (currentTime - lastTime) / 1000;
-  globalTimer += dt;
-  stateTimer += dt;
-
+  
   if(delegate !== null && pause == false){
+    globalTimer += dt;
+    stateTimer += dt;
     delegate.update();
     ctx.save();
     ctx.fillStyle = bgColor;
