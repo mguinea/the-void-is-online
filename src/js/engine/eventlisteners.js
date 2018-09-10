@@ -1,12 +1,3 @@
-/*
-document.addEventListener('keypress', function(e){
-  if(e.keyCode == 114){
-    e.preventDefault();
-  }
-  keypressed = e.keyCode;
-}, false);
-//*/
-
 function keyPressedOnce(keyCode){
   if(keyPressed[keyCode] == true && keyPressedAvailable[keyCode] == true){
     keyPressed[keyCode] = false;
@@ -33,5 +24,15 @@ document.addEventListener('keyup',function(e){
   keyPressedAvailable[e.keyCode] = true;
 
 }, false);
+
+window.onfocus = function() {
+  pause = false;
+  reqId = window.requestAnimationFrame(gameLoop);
+}
+
+window.onblur = function() {
+  pause = true;
+  cancelAnimationFrame(reqId);
+}
 
 window.addEventListener("load", init, false);

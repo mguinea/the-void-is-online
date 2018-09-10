@@ -5,7 +5,6 @@
 3: -
 4: when to change state
 */
-
 var pathData = [0, 0, [0, 0, 1, 0, 0, 1, 0], null, null];
 var r = 0, up = pathData[1], down = pathData[1] + 1;
 
@@ -14,6 +13,38 @@ var pathState = {
     bgColor = colors[0];
     stateTimer = 0;
 
+    pathData[2] = [0, 0, 1, 0, 0, 1, 0];
+    pathData[4] = null;
+
+    switch(pathData[0]){
+      case 0:
+        pathData[1] = 0;
+      break;
+      case 1:
+        pathData[1] = 1;
+      break;
+      case 2:
+        pathData[1] = 2;
+      break;
+      case 3:
+        if(pathData[1] == 2){
+          pathData[1] = 3;
+        }else if(pathData[1] == 3){
+          pathData[1] = 5;
+        }
+      break;
+      case 4:
+        pathData[1] = 6;
+      break;
+      case 5:
+        pathData[1] = 7;
+      break;
+      case 6:
+        pathData[1] = 9;
+      break;
+    }
+    up = pathData[1];
+    down = pathData[1] + 1;
     limitDown = pathData[1] - 1;
     limitUp = pathData[1] + 1;
   },
@@ -24,12 +55,24 @@ var pathState = {
       if(pathData[2][pathData[0]] == 1){
         if(pressing[87] || pressing[38]){ // Up
           if(pathData[1] > up){
+
             pathData[1] = up;
+
+            if(pathData[0] == 2){
+              pathData[1] = 2;
+            }
+
             soundPlayer[1].play();
           }
         }else if(pressing[83] || pressing[40]){ // Down
           if(pathData[1] < down){
+
             pathData[1] = down;
+
+            if(pathData[0] == 2){
+              pathData[1] = 3;
+            }
+
             soundPlayer[1].play();
           }
         }
@@ -58,22 +101,22 @@ var pathState = {
       font ('PRESS ENTER', W/2, H - 200, 17, 1, 0, 'round', 1);
     }
 
-    fillCircle(128, H/2, selectPointEffect(0));
+    fillStaticCircle(128, H/2, selectPointEffect(0));
 
-    fillCircle(128 + 80, H/2, selectPointEffect(1));
+    fillStaticCircle(128 + 80, H/2, selectPointEffect(1));
 
-    fillCircle(128 + 80 * 2, H/2 - 64, selectPointEffect(2));
-    fillCircle(128 + 80 * 2, H/2 + 64, selectPointEffect(3));
+    fillStaticCircle(128 + 80 * 2, H/2 - 64, selectPointEffect(2));
+    fillStaticCircle(128 + 80 * 2, H/2 + 64, selectPointEffect(3));
 
-    fillCircle(128 + 80 * 3, H/2 - 64, selectPointEffect(4));
-    fillCircle(128 + 80 * 3, H/2 + 64, selectPointEffect(5));
+    fillStaticCircle(128 + 80 * 3, H/2 - 64, selectPointEffect(4));
+    fillStaticCircle(128 + 80 * 3, H/2 + 64, selectPointEffect(5));
 
-    fillCircle(128 + 80 * 4, H/2, selectPointEffect(6));
+    fillStaticCircle(128 + 80 * 4, H/2, selectPointEffect(6));
 
-    fillCircle(128 + 80 * 5, H/2 - 64, selectPointEffect(7));
-    fillCircle(128 + 80 * 5, H/2 + 64, selectPointEffect(8));
+    fillStaticCircle(128 + 80 * 5, H/2 - 64, selectPointEffect(7));
+    fillStaticCircle(128 + 80 * 5, H/2 + 64, selectPointEffect(8));
 
-    fillCircle(128 + 80 * 6 + 12, H/2, selectPointEffect(9));
+    fillStaticCircle(128 + 80 * 6 + 12, H/2, selectPointEffect(9));
 
 
     drawLine(128, H/2, 80, 0);

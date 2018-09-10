@@ -77,6 +77,18 @@ function fillCircle(x, y, r, color = 17){
 	ctx.restore();
 }
 
+function fillStaticCircle(x, y, r, color = 17){
+	ctx.save();
+	if(gameData[1] == 0){color = 17;}
+	setContextAttribute(color, 1);
+	ctx.beginPath();
+	ctx.translate(x, y);
+	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
+	ctx.fill();
+	ctx.closePath();
+	ctx.restore();
+}
+
 function strokeCircle(x, y, r){
 	ctx.save();
 	ctx.beginPath();

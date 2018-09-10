@@ -25,7 +25,7 @@ var bossShapes = [
 ];
 
 function bossCollidesWithPlayer(boss, iBoss, iPlayer){
-  if(AABBCollides(player[iPlayer], boss)){
+  if(AABBCollides(player[iPlayer], boss) && god != false){
     soundPlayer[3].play();
     explosions.push([player[iPlayer][0], player[iPlayer][1], stateTimer + player[iPlayer][13], 0]);
     player[iPlayer][6] = 3;                // Player state to dead
@@ -35,8 +35,9 @@ function bossCollidesWithPlayer(boss, iBoss, iPlayer){
 }
 
 function bossDamage(iBoss, iPlayer){
+  var damage = (god ? 100 : 1);
   if(bosses[iBoss][9] > 0){
-    bosses[iBoss][9] -= 1;
+    bosses[iBoss][9] -= damage;
     soundPlayer[4].play();
     player[iPlayer][11] += 32;
   }
@@ -46,7 +47,6 @@ function bossDestroy(i){
   gameData[4] = stateTimer + 3;
   gameData[3] = 1; // finish level
   soundPlayer[7].play();
-  player[0][11] += 300;
   for(var c = 0; c < 10; ++c){
     explosions.push([bosses[i][0] + srand(0, bosses[i][2]), bosses[i][1] + srand(0, bosses[i][3]), stateTimer + 2, 0]);
   }

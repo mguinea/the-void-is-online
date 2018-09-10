@@ -1,5 +1,4 @@
 var camTarget = [0],
-  currentLevel = 0,
 	gameOver = 0,
   gameOverTimer = 0,
   camVelocity = 65; // 65;
@@ -22,7 +21,6 @@ var gameState = {
     gameData = [0, 2, 100, 0, null];
 
     camTarget = [0],
-    currentLevel = 0,
   	gameOver = 0,
     gameOverTimer = 0,
     camVelocity = 65;
@@ -37,6 +35,7 @@ var gameState = {
   },
 
   update: function(){
+		if(keyPressedOnce(71)){ god = !god; console.log('GOD MODE: ' + god);}
     playerUpdate();
 
     camTarget[0] += camVelocity * dt;
@@ -60,6 +59,12 @@ var gameState = {
       break;
       case 1:
         camVelocity = 65;
+
+        if(gameData[4] !== null && gameData[4] < stateTimer){
+          // set next level for path selection
+					pathData[0]++; // current level in path state
+          setState(pathState);
+        }
       break;
       case 2:
         camVelocity = 0;
@@ -106,11 +111,6 @@ var gameState = {
         seed = 1;
 			}
 		}
-
-    if(gameData[4] !== null && gameData[4] < stateTimer){
-      // set next level for path selection
-      setState(pathState);
-    }
 
     if(gameOverTimer != 0 && gameOverTimer < stateTimer){
       setState(menuState);

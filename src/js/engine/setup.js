@@ -29,6 +29,9 @@ W = FW - 2 * GAME_MARGIN,
 H = FH - 2 * GAME_Y_MARGIN,
 borderLength = 2*(W+H+2*GAME_INC_PADDING),
 localStorageId = 'tvio-js13k-2018',
+reqId = null,
+pause = false,
+god = false,
 DEBUG = false;
 
 /* DOM setup */
@@ -79,7 +82,7 @@ function setState(state){
 
 function init(){
   setState(splashState);
-  requestAnimationFrame(gameLoop);
+  reqId = window.requestAnimationFrame(gameLoop);
 }
 
 // Request animation frame setup

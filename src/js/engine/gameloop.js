@@ -4,7 +4,7 @@ function gameLoop(){
   globalTimer += dt;
   stateTimer += dt;
 
-  if(delegate !== null){
+  if(delegate !== null && pause == false){
     delegate.update();
     ctx.save();
     ctx.fillStyle = bgColor;
@@ -16,5 +16,5 @@ function gameLoop(){
   }
 
   lastTime = currentTime;
-  requestAnimationFrame(gameLoop);
+  reqId = window.requestAnimationFrame(gameLoop);
 }

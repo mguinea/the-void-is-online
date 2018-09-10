@@ -117,20 +117,22 @@ function playerUpdate(){
       }
     }
 
-    // Get damage by enemy contact
-    processGroup(enemies, enemyCollidesWithPlayer, 0);
+    if(god == false){
+      // Get damage by enemy contact
+      processGroup(enemies, enemyCollidesWithPlayer, 0);
 
-    // Get damage by boss contact
-    processGroup(bosses, bossCollidesWithPlayer, 0);
+      // Get damage by boss contact
+      processGroup(bosses, bossCollidesWithPlayer, 0);
 
-    // Get damage by enemy projectile
-    for(var i = 0; i < enemyProjectiles.length; ++i){
-      if(AABBCollides(player[0], enemyProjectiles[i])){
-        explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
-        soundPlayer[3].play();
-        player[0][6] = 3;                // Player state to dead
-        player[0][8] -= 1;               // Remove a life
-        player[0][12] = stateTimer + 2;  // Calculate when respawn
+      // Get damage by enemy projectile
+      for(var i = 0; i < enemyProjectiles.length; ++i){
+        if(AABBCollides(player[0], enemyProjectiles[i])){
+          explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
+          soundPlayer[3].play();
+          player[0][6] = 3;                // Player state to dead
+          player[0][8] -= 1;               // Remove a life
+          player[0][12] = stateTimer + 2;  // Calculate when respawn
+        }
       }
     }
 
@@ -192,12 +194,13 @@ function playerUpdate(){
       }
     }
 
-    // Get damage by enemy contact
-    processGroup(enemies, enemyCollidesWithPlayer, 1);
+    if(god == false){
+      // Get damage by enemy contact
+      processGroup(enemies, enemyCollidesWithPlayer, 1);
 
-    // Get damage by boss contact
-    processGroup(bosses, bossCollidesWithPlayer, 0);
-
+      // Get damage by boss contact
+      processGroup(bosses, bossCollidesWithPlayer, 0);
+    }
     // Attack
     if(pressing[80] && player[1][9] < stateTimer){
       player[1][9] = stateTimer + player[1][10];
