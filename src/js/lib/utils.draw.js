@@ -67,7 +67,7 @@ function strokeStaticRectangle(rect, index, size = 1){
 
 function fillCircle(x, y, r, color = 17){
 	ctx.save();
-	if(gameData[1] == 0){color = 17;}
+	if(gameData[1] == 0 || gameData[1] == 1){color = 17;}
 	setContextAttribute(color, 1);
 	ctx.beginPath();
 	ctx.translate(x - cam[0], y);
@@ -79,7 +79,7 @@ function fillCircle(x, y, r, color = 17){
 
 function fillStaticCircle(x, y, r, color = 17){
 	ctx.save();
-	if(gameData[1] == 0){color = 17;}
+	if(gameData[1] == 0 || gameData[1] == 1){color = 17;}
 	setContextAttribute(color, 1);
 	ctx.beginPath();
 	ctx.translate(x, y);
@@ -98,35 +98,12 @@ function strokeCircle(x, y, r){
 	ctx.closePath();
 	ctx.restore();
 }
-/*
-function strokePath (x, y, r, pts, d) {
-	ctx.save();
-	ctx.lineJoin = "round";
-	ctx.beginPath();
-	ctx.translate(x - cam[0], y - cam[1]);
-	//ctx.rotate((r).toRad());
-
-	var mv = 1;
-	for (var i = 0; pts && i<pts.length; ++i) {
-		var p = pts[i];
-		if (p) {
-			if (mv) ctx.moveTo(p[0] * d, p[1] * d);
-			else ctx.lineTo(p[0] * d, p[1] * d);
-			mv = 0;
-		}
-		else mv = 1;
-	}
-	ctx.stroke();
-	ctx.closePath();
-	ctx.restore();
-	return ctx;
-}*/
 
 function strokePath (x, y, pts, noclose, scale = 1, color = 17, lineWidth = 1) {
 	ctx.save();
   ctx.translate(x, y);
 	ctx.lineWidth = lineWidth;
-	if(gameData[1] == 0){color = 17;}
+	if(gameData[1] == 0 || gameData[1] == 1){color = 17;}
   setContextAttribute(color, 0);
   ctx.beginPath();
   var mv = 1;

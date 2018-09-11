@@ -10,6 +10,10 @@ document.addEventListener('keydown',function(e){
   lastPress = e.keyCode;
   pressing[e.keyCode] = true;
 
+  if(e.keyCode == 113){
+    e.preventDefault();
+  }
+
   if(keyPressedAvailable[e.keyCode] == true || keyPressedAvailable[e.keyCode] == null){
     keyPressed[e.keyCode] = true;
     keyPressedAvailable[e.keyCode] = true;

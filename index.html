@@ -3,7 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>The void is online - js13k 2018</title>
-    <link rel="stylesheet" href="src/css/app.css">
+    <style media="screen">
+      body {background:#000;margin:0;padding:0;}
+      canvas {display:none;}
+      #c{height:100vh;margin:auto;display:block;}
+      .button { background-color: #2c3e50;border: none;padding: 12px 18px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; }
+      .button:hover{ background-color:#ecf0f1; }
+      #f{font-family:sans-serif;position:absolute;bottom:10px;left:10px;font-size:18px;color:#ecf0f1;text-decoration:none;}
+      #f:hover{color:#2c3e50;}
+    </style>
     <script id="vertex-shader-static" type="x-shader/x-vertex">
           attribute vec2 p;
           varying vec2 uv;
@@ -78,9 +86,7 @@
       <canvas id="g" moz-opaque></canvas>
     </div>
 
-    <!--<script src="src/js/lib/pixel-font.js"></script>-->
     <script src="src/js/lib/webgl.js"></script>
-    <!--<script src="src/js/lib/tween.js"></script>-->
     <script src="src/js/lib/native.object.extension.js"></script>
     <script src="src/js/lib/utils.js"></script>
     <script src="src/js/lib/pools.js"></script>

@@ -22,7 +22,7 @@ var gameState = {
 		wavesMoment = [];
 		bosses = [];
 		gameData = [0, 2, 100, 0, null];
-		
+
     camTarget = [0],
   	gameOver = 0,
     gameOverTimer = 0,
@@ -38,6 +38,14 @@ var gameState = {
   },
 
   update: function(){
+		// Change render mode
+		if(keyPressedOnce(113)){
+			gameData[1]++;
+			if(gameData[1] > 2){
+				gameData[1] = 0;
+			}
+		}
+
 		if(keyPressedOnce(71)){ god = !god; console.log('GOD MODE: ' + god);}
     playerUpdate();
 
@@ -138,11 +146,30 @@ var gameState = {
     if(gameData[1] == 1){
       ctx.save();
       ctx.globalAlpha = 0.2;
-      fillStaticRectangle([0, 0, W, H/4], 21);
-      fillStaticRectangle([0, H/4, W, 3], 12);
+      fillStaticRectangle([0, 0, 				W, H/4], 21);
+      fillStaticRectangle([0, H/4, 			W, 3], 12);
+			fillStaticRectangle([0, H/4 + 3, 	W, 18], 21);
+			fillStaticRectangle([0, H/4 + 3 + 18, 			W, 5], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5, 	W, 18], 21);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18, 			W, 9], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9, 	W, 4], 21);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4, W, 12], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12, 	W, 2], 21);
 
-      fillStaticRectangle([0, H - H/4 - 3, W, 3], 12);
-      fillStaticRectangle([0, H - H/4, W, H/4], 22);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2, W, 180], 12);
+
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180, 	W, 2], 22);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2, W, 12], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12, 	W, 4], 22);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4, 			W, 9], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9, 	W, 18], 22);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18, 			W, 5], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5, 	W, 18], 22);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5 + 18, 			W, 3], 12);
+			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5 + 18 + 3, 				W, H/4], 22);
+
+      //fillStaticRectangle([0, H - H/4 - 3, W, 3], 12);
+      //fillStaticRectangle([0, H - H/4, W, H/4], 22);
       ctx.restore();
     }
 
@@ -158,7 +185,7 @@ var gameState = {
 
 		// Draw game over
     if(gameData[0] == 1){
-      font ('GAME OVER', W / 2, 256, 17, 1, 1);
+      font ('GAME OVER', W / 2, 256, 17, 1, 0);
     }
   }
 };
