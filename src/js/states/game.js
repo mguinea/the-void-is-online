@@ -1,6 +1,7 @@
 var camTarget = [0],
 	gameOver = 0,
   gameOverTimer = 0,
+	floor = [],
   camVelocity = 65; // 65;
 /*
 GameData
@@ -19,6 +20,13 @@ var gameState = {
     stateTimer = 0;
 		//powerups.push([256, 256, 52, 32, 3]);
 		enemies = [];
+		floor = [];
+		// init floor
+		for(var i = 0; i < 10; ++i){
+			var prev = (floor[i-1] != null ? floor[i-1][0] : 0);
+			floor.push([prev + srand(64, 128), 32 - srand(0, 32)]);
+		}
+
 		wavesMoment = [];
 		bosses = [];
 		gameData = [0, 2, 100, 0, null];
@@ -62,7 +70,17 @@ var gameState = {
     processGroup(playerProjectiles[0], playerProjectileUpdate, 0);
     processGroup(playerProjectiles[1], playerProjectileUpdate, 1);
     processGroup(powerups, powerupUpdate);
-    processGroup(stars, starUpdate);
+		if(pathData[1] != 2 && pathData[1] != 5 && pathData[1] != 8 ){
+	    processGroup(stars, starUpdate);
+		}
+
+		// update floor
+		if(pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8){
+			if(floor[0][0] - cam[0] < camTarget[0]){
+				var prev = floor[floor.length - 1][0];
+				floor.push([prev + srand(64, 128), srand(0, 32)]);
+			}
+		}
 
     switch(gameData[3]){
       case 0:
@@ -131,6 +149,30 @@ var gameState = {
   },
 
   draw: function(){
+		// Draw planet floor and atmosphere
+		if((pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8) && gameData[1] == 2){
+			ctx.save();
+			ctx.globalAlpha = 0.2;
+			switch(pathData[1]){
+				case 2:
+	      	fillStaticRectangle([0, 0, W, H], 14);
+				break;
+				case 5:
+					fillStaticRectangle([0, 0, W, H], 5);
+				break;
+				case 8:
+					fillStaticRectangle([0, 0, W, H], 7);
+				break;
+			}
+			ctx.restore();
+
+		}
+
+		if(pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8){
+			// Draw floor
+			strokePath (floor[0][0] - cam[0], H - 190, floor, true, 1, 17, 1);
+		}
+
     processGroup(bosses, bossDraw);
     processGroup(enemies, enemyDraw);
     processGroup(enemyProjectiles, enemyProjectileDraw);
@@ -138,7 +180,9 @@ var gameState = {
     processGroup(playerProjectiles[0], playerProjectileDraw);
     processGroup(playerProjectiles[1], playerProjectileDraw);
     processGroup(powerups, powerupDraw);
-    processGroup(stars, starDraw);
+		if(pathData[1] != 2 && pathData[1] != 5 && pathData[1] != 8 ){
+	    processGroup(stars, starDraw);
+		}
 
     playerHUDDraw();
     playerDraw();
@@ -149,24 +193,24 @@ var gameState = {
       fillStaticRectangle([0, 0, 				W, H/4], 21);
       fillStaticRectangle([0, H/4, 			W, 3], 12);
 			fillStaticRectangle([0, H/4 + 3, 	W, 18], 21);
-			fillStaticRectangle([0, H/4 + 3 + 18, 			W, 5], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5, 	W, 18], 21);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18, 			W, 9], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9, 	W, 4], 21);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4, W, 12], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12, 	W, 2], 21);
+			fillStaticRectangle([0, H/4 + 21, 			W, 5], 12);
+			fillStaticRectangle([0, H/4 + 26, 	W, 18], 21);
+			fillStaticRectangle([0, H/4 + 44, 			W, 9], 12);
+			fillStaticRectangle([0, H/4 + 53, 	W, 4], 21);
+			fillStaticRectangle([0, H/4 + 57, W, 12], 12);
+			fillStaticRectangle([0, H/4 + 69, 	W, 2], 21);
 
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2, W, 180], 12);
+			fillStaticRectangle([0, H/4 + 71, W, 180], 12);
 
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180, 	W, 2], 22);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2, W, 12], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12, 	W, 4], 22);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4, 			W, 9], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9, 	W, 18], 22);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18, 			W, 5], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5, 	W, 18], 22);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5 + 18, 			W, 3], 12);
-			fillStaticRectangle([0, H/4 + 3 + 18 + 5 + 18 + 9 + 4 + 12 + 2 + 180 + 2 + 12 + 4 + 9 + 18 + 5 + 18 + 3, 				W, H/4], 22);
+			fillStaticRectangle([0, H/4 + 251, 	W, 2], 22);
+			fillStaticRectangle([0, H/4 + 253, W, 12], 12);
+			fillStaticRectangle([0, H/4 + 265, 	W, 4], 22);
+			fillStaticRectangle([0, H/4 + 269, 			W, 9], 12);
+			fillStaticRectangle([0, H/4 + 278, 	W, 18], 22);
+			fillStaticRectangle([0, H/4 + 296, 			W, 5], 12);
+			fillStaticRectangle([0, H/4 + 301, 	W, 18], 22);
+			fillStaticRectangle([0, H/4 + 319, 			W, 3], 12);
+			fillStaticRectangle([0, H/4 + 322, 				W, H/4], 22);
 
       //fillStaticRectangle([0, H - H/4 - 3, W, 3], 12);
       //fillStaticRectangle([0, H - H/4, W, H/4], 22);

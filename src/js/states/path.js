@@ -80,6 +80,7 @@ var pathState = {
     }
 
     if(keyPressedOnce(13)){
+      // pathData[1] = 2; // DEBUG
       pathData[4] = stateTimer + 1;
       soundPlayer[2].play();
     }
@@ -154,7 +155,7 @@ function selectPointTitle(point){
       return 'ASTEROIDS';
     break;
     case 2:
-      return 'TITAN';
+      return 'PLANET TITAN';
     break;
     case 3:
       return 'ASTEROIDS';
@@ -163,7 +164,7 @@ function selectPointTitle(point){
       return 'BLACK HOLE';
     break;
     case 5:
-      return 'FLEET';
+      return 'PLANET MEGACLITE';
     break;
     case 6:
       return 'SECTOR Z';
@@ -172,7 +173,7 @@ function selectPointTitle(point){
       return 'ASTEROIDS';
     break;
     case 8:
-      return 'SECTOR Y';
+      return 'PLANET GANYMEDE';
     break;
     case 9:
       return 'THE VOID';

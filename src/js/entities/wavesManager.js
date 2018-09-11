@@ -71,8 +71,11 @@ function wavesManagerSpawner(){
       7: init time
       8: end time
       */
-      var cadency = srand(1, 3);
-      enemies.push([W + camTarget[0] + (i * 48), srand(32, H - 160), 32, 20, wave[2], null, cadency, stateTimer + cadency, null]);
+      var cadency = srand(1, 3), posY = srand(32, H - 160);
+      if(pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8){
+        posY = srand(32, H - 190 - 32);
+      }
+      enemies.push([W + camTarget[0] + (i * 48), posY, 32, 20, wave[2], null, cadency, stateTimer + cadency, null]);
     }
   }
 
