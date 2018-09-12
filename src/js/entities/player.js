@@ -90,10 +90,10 @@ function playerUpdate(){
     // Movement
     if(pressing[playerControls[0]]){ // Up
       player[0][6] = 1;
-      if(player[0][1] > 32){
+      if(player[0][1] > 48){
         player[0][1] -= player[0][5] * dt;
       }else{
-        player[0][1] = 32;
+        player[0][1] = 48;
       }
     }else if(pressing[83]){ // Down
       player[0][6] = 2;
@@ -120,6 +120,9 @@ function playerUpdate(){
     }
 
     if(god == false){
+			// Get damage by asteroid contact
+			processGroup(asteroids, asteroidCollidesWithPlayer, 0);
+
       // Get damage by enemy contact
       processGroup(enemies, enemyCollidesWithPlayer, 0);
 
@@ -197,10 +200,10 @@ function playerUpdate(){
     // Movement
     if(pressing[38]){ // Up
       player[1][6] = 1;
-      if(player[1][1] > 32){
+      if(player[1][1] > 48){
         player[1][1] -= player[1][5] * dt;
       }else{
-        player[1][1] = 32;
+        player[1][1] = 48;
       }
     }else if(pressing[40]){ // Down
       player[1][6] = 2;
@@ -227,11 +230,36 @@ function playerUpdate(){
     }
 
     if(god == false){
+			// Get damage by asteroid contact
+      processGroup(asteroids, asteroidCollidesWithPlayer, 1);
+
       // Get damage by enemy contact
       processGroup(enemies, enemyCollidesWithPlayer, 1);
 
       // Get damage by boss contact
       processGroup(bosses, bossCollidesWithPlayer, 0);
+
+			// Get damage by floor contact
+			if(pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8 ){
+        if(player[1][1] > H - 190){
+          explosions.push([player[1][0], player[1][1], stateTimer + player[1][13], 0]);
+          soundPlayer[3].play();
+          player[1][6] = 3;                // Player state to dead
+          player[1][8] -= 1;               // Remove a life
+          player[1][12] = stateTimer + 2;  // Calculate when respawn
+        }
+			}
+
+      // Get damage by enemy projectile
+      for(var i = 0; i < enemyProjectiles.length; ++i){
+        if(AABBCollides(player[1], enemyProjectiles[i])){
+          explosions.push([player[1][0], player[1][1], stateTimer + player[1][13], 0]);
+          soundPlayer[3].play();
+          player[1][6] = 3;                // Player state to dead
+          player[1][8] -= 1;               // Remove a life
+          player[1][12] = stateTimer + 2;  // Calculate when respawn
+        }
+      }
     }
 
     // Get powerup
@@ -267,7 +295,7 @@ function playerUpdate(){
     }
 
     // Attack
-    if(pressing[80] && player[1][9] < stateTimer){
+    if(pressing[17] && player[1][9] < stateTimer){
       player[1][9] = stateTimer + player[1][10];
       soundPlayer[5].play();
 

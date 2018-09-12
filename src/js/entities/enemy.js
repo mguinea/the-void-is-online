@@ -52,9 +52,9 @@ function enemyDestroy(iEnemy, iPlayer){
   var prob = srand(0, 100);
   if(prob > 95){
     powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 3]);
-  }else if(prob > 90){
+  }else if(prob > 90 && (player[0][14] == 0 || player[1][14] == 0)){
     powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 2]);
-  }else if(prob > 85){
+  }else if(prob > 85 && (player[0][8] < 3 || player[1][8] < 3)){
     powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 1]);
   }else if(prob > 80){
     powerups.push([enemies[iEnemy][0], enemies[iEnemy][1], 52, 32, 0]);
@@ -73,13 +73,13 @@ function enemyDraw(e){
   // Show
   switch(e[4]){
     case 0:
-      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[0]);
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[0], false, 1, 9);
     break;
     case 1:
-      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[1]);
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[1], false, 1, 7);
     break;
     case 2:
-      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[2]);
+      strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[2], false, 1, 12);
     break;
   }
 

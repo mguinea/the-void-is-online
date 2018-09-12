@@ -46,10 +46,5 @@ function explosionUpdate(e, params, i){
 }
 
 function explosionDraw(e){
-  ctx.save();
-  ctx.translate(e[0] - cam[0], e[1]);
-  setContextAttribute(17, 0);
-  path(explosionShape[e[3]], true);
-  ctx.stroke();
-  ctx.restore();
+  strokePath(e[0] - cam[0], e[1], explosionShape[e[3]], false, 1, 11);
 }

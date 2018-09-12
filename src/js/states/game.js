@@ -27,6 +27,27 @@ var gameState = {
 			floor.push([prev + srand(64, 128), 32 - srand(0, 32)]);
 		}
 
+		asteroids = [];
+		if(pathData[1] == 1 || pathData[1] == 3 || pathData[1] == 7 ){
+			for(var i = 0; i < 16; ++i){
+				var sizes = [32, 64];
+				var size = ~~srand(0, 2);
+				var scale = size + 1;
+				/*
+				Asteroid
+				0: x
+				1: y
+				2: width
+				3: height
+				4: rotation
+				5: velocity
+				6: life
+				7: scale
+				*/
+				asteroids.push([camTarget[0] + W + srand(0, 512), srand(64, H - 64), sizes[size], sizes[size], srand(0, 360), 0, 6, scale]);
+			}
+		}
+
 		wavesMoment = [];
 		bosses = [];
 		gameData = [0, 2, 100, 0, null];
@@ -72,6 +93,10 @@ var gameState = {
     processGroup(powerups, powerupUpdate);
 		if(pathData[1] != 2 && pathData[1] != 5 && pathData[1] != 8 ){
 	    processGroup(stars, starUpdate);
+		}
+
+		if(pathData[1] == 1 || pathData[1] == 3 || pathData[1] == 7 ){
+	    processGroup(asteroids, asteroidUpdate);
 		}
 
 		// update floor
@@ -171,6 +196,10 @@ var gameState = {
 		if(pathData[1] == 2 || pathData[1] == 5 || pathData[1] == 8){
 			// Draw floor
 			strokePath (floor[0][0] - cam[0], H - 190, floor, true, 1, 17, 1);
+		}
+
+		if(pathData[1] == 1 || pathData[1] == 3 || pathData[1] == 7 ){
+	    processGroup(asteroids, asteroidDraw);
 		}
 
     processGroup(bosses, bossDraw);

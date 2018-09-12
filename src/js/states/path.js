@@ -80,7 +80,7 @@ var pathState = {
     }
 
     if(keyPressedOnce(13)){
-      // pathData[1] = 2; // DEBUG
+      // pathData[1] = 3; // DEBUG
       pathData[4] = stateTimer + 1;
       soundPlayer[2].play();
     }

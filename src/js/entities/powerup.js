@@ -41,7 +41,7 @@ function powerupDraw(e){
       text = '1UP';
     break;
     case 2:
-      text = 'DOU';
+      text = 'X2';
     break;
     case 3:
       text = 'FRI';

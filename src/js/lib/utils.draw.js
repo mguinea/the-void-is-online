@@ -99,9 +99,16 @@ function strokeCircle(x, y, r){
 	ctx.restore();
 }
 
-function strokePath (x, y, pts, noclose, scale = 1, color = 17, lineWidth = 1) {
+function strokePath (x, y, pts, noclose, scale = 1, color = 17, lineWidth = 1, rotation = null, radius = null) {
 	ctx.save();
-  ctx.translate(x, y);
+
+	if(rotation != null){
+		ctx.translate(x, y);
+		ctx.rotate(rotation * Math.PI / 180);
+		ctx.translate(-radius/2, -radius/2);
+	}else{
+		ctx.translate(x, y);
+	}
 	ctx.lineWidth = lineWidth;
 	if(gameData[1] == 0 || gameData[1] == 1){color = 17;}
   setContextAttribute(color, 0);

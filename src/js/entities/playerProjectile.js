@@ -35,6 +35,14 @@ function playerProjectileUpdate(projectile, iProjectile, iPlayer){
     }
   }
 
+  // Collides with asteroid
+  for(var i = 0; i < asteroids.length; ++i){
+    if(AABBCollides(projectile, asteroids[i])){
+      asteroids[i][6] -= 1;
+      playerProjectileDestroy(iProjectile, iPlayer);
+    }
+  }
+
   // Collides with boss
   for(var i = 0; i < bosses.length; ++i){
     if(AABBCollides(projectile, bosses[i])){
