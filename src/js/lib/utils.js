@@ -17,6 +17,13 @@ function srand(min = null, max = null) {
   }
 }
 
+function angleTo ( e1, e2 ) {
+    return Math.atan2(
+        (e2[1]) - (e1[1]),
+        (e2[0]) - (e1[0])
+    );
+}
+
 function AABBCollides(e1, e2){
     return(
             e1[0]  <   e2[0]      +   e2[2]   &&

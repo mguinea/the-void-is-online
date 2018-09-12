@@ -74,7 +74,7 @@ var gameState = {
 				gameData[1] = 0;
 			}
 		}
-
+		
 		if(keyPressedOnce(71)){ god = !god; console.log('GOD MODE: ' + god);}
     playerUpdate();
 
@@ -86,6 +86,7 @@ var gameState = {
 
     processGroup(bosses, bossUpdate);
     processGroup(enemies, enemyUpdate);
+		processGroup(bossProjectiles, bossProjectileUpdate);
     processGroup(enemyProjectiles, enemyProjectileUpdate);
     processGroup(explosions, explosionUpdate);
     processGroup(playerProjectiles[0], playerProjectileUpdate, 0);
@@ -204,6 +205,7 @@ var gameState = {
 
     processGroup(bosses, bossDraw);
     processGroup(enemies, enemyDraw);
+		processGroup(bossProjectiles, bossProjectileDraw);
     processGroup(enemyProjectiles, enemyProjectileDraw);
     processGroup(explosions, explosionDraw);
     processGroup(playerProjectiles[0], playerProjectileDraw);

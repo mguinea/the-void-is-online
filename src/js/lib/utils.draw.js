@@ -89,11 +89,14 @@ function fillStaticCircle(x, y, r, color = 17){
 	ctx.restore();
 }
 
-function strokeCircle(x, y, r){
+function strokeSemiCircle(x, y, r, color = 17, size = 1){
 	ctx.save();
+	ctx.lineWidth = size;
+	if(gameData[1] == 0 || gameData[1] == 1){color = 17;}
+	setContextAttribute(color, 0);
 	ctx.beginPath();
-	ctx.translate(x-cam[0], y-cam[1]);
-	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
+	ctx.translate(x - cam[0], y);
+	ctx.arc(0, 0, r, 0, Math.PI, true);
 	ctx.stroke();
 	ctx.closePath();
 	ctx.restore();

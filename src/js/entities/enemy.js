@@ -74,6 +74,7 @@ function enemyDraw(e){
   switch(e[4]){
     case 0:
       strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[0], false, 1, 9);
+      
     break;
     case 1:
       strokePath(e[0] - cam[0] - 3, e[1] + 7, /*enemyShapes[e[4]]*/enemyShapes[1], false, 1, 7);

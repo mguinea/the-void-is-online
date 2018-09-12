@@ -10,7 +10,9 @@ Enemy
 7: type // defines draw and behaviour
 8: behaviour data [
 9: life (100)
-
+10: init x position
+11: sine oscillation
+12 : init time
 ]
 */
 
@@ -61,16 +63,21 @@ function bossUpdate(e, iBoss){
 
   switch(e[7]){
     case 0:
-      //var length = 10, rotation = (~~(stateTimer * 60) % 360), bounce = Math.cos( (rotation).toRad() ) * length;
-      //e[0] += bounce;
-
       /*
       A = Amplitude (Tallness) of the wave.
       B = How many waves there are for each cycle.
       C = How far to shift the wave’s X position.
       D = How far to shift the wave’s Y position.
       */
-      e[0] = sineMovement(W, 1, 0, 500, stateTimer);
+      e[11] = sineMovement(W, 1, 0, -W/2, stateTimer);
+      e[0] = e[10] + e[11];
+
+
+      // Shot
+      if(e[12] < stateTimer){
+        bossProjectileShot(e);
+        e[12] = stateTimer + srand(e[6], e[6] + 0.5);
+      }
     break;
   }
 }
@@ -79,6 +86,10 @@ function bossDraw(e){
   switch(e[7]){
     case 0:
       strokePath(e[0] - cam[0] - 18, e[1] + 22, bossShapes[0]);
+      fillCircle(e[0] - cam[0] + 55, e[1] + 50, 4, 8);
+      if(e[9] > 25) { strokeSemiCircle(e[0] - cam[0] + 55, e[1] + 50, 12, 2, 2); }
+      if(e[9] > 50) { strokeSemiCircle(e[0] - cam[0] + 55, e[1] + 50, 12* 2, 2, 2); }
+      if(e[9] > 75) { strokeSemiCircle(e[0] - cam[0] + 55, e[1] + 50, 12* 3, 2, 2); }
     break;
   }
 

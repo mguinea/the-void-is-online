@@ -1,10 +1,11 @@
-var wavesMoment = [], totalLevelTime = 90, wavesPerLevel = 15, amountToSpawn = [4, 6];
+var wavesMoment = [], totalLevelTime = 0, wavesPerLevel = 0, amountToSpawn = [4, 6]; //totalLevelTime = 90, wavesPerLevel = 15
 
 function wavesManagerInit(){
 
 
   // Depending on pathData[1] (level), we will spawn different type of enemies / asteroids and bosses
   var wavesConfiguration = [];
+  /*
   switch(pathData[1]){
     case 0:
       wavesPerLevel = 45;
@@ -38,6 +39,7 @@ function wavesManagerInit(){
       wavesPerLevel = 45;
     break;
   }
+  //*/
 
   var frequency = totalLevelTime / wavesPerLevel; // ex. 90 seconds every level, 10 waves => 90 / 10 => every 9 seconds
 
@@ -83,7 +85,7 @@ function wavesManagerSpawner(){
   if(stateTimer > totalLevelTime){
     if(bosses.length <= 0 && gameData[3] == 0){
       gameData[3] = 2;
-      bosses.push([W + camTarget[0], H/2, 100, 70, 10, null, null, 0, [], 100]);
+      bosses.push([camTarget[0] + W - 256, H/2, 100, 70, 10, null, 0.1, 0, [], 100, camTarget[0] + W, 0, stateTimer]);
       soundPlayer[6].play();
     }
   }

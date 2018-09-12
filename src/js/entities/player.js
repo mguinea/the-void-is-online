@@ -150,6 +150,17 @@ function playerUpdate(){
           player[0][12] = stateTimer + 2;  // Calculate when respawn
         }
       }
+
+			// Get damage by boss projectile
+      for(var i = 0; i < bossProjectiles.length; ++i){
+        if(AABBCollides(player[0], bossProjectiles[i])){console.log('collides');
+          explosions.push([player[0][0], player[0][1], stateTimer + player[0][13], 0]);
+          soundPlayer[3].play();
+          player[0][6] = 3;                // Player state to dead
+          player[0][8] -= 1;               // Remove a life
+          player[0][12] = stateTimer + 2;  // Calculate when respawn
+        }
+      }
     }
 
     // Get powerup
@@ -253,6 +264,17 @@ function playerUpdate(){
       // Get damage by enemy projectile
       for(var i = 0; i < enemyProjectiles.length; ++i){
         if(AABBCollides(player[1], enemyProjectiles[i])){
+          explosions.push([player[1][0], player[1][1], stateTimer + player[1][13], 0]);
+          soundPlayer[3].play();
+          player[1][6] = 3;                // Player state to dead
+          player[1][8] -= 1;               // Remove a life
+          player[1][12] = stateTimer + 2;  // Calculate when respawn
+        }
+      }
+
+			// Get damage by boss projectile
+      for(var i = 0; i < bossProjectiles.length; ++i){
+        if(AABBCollides(player[1], bossProjectiles[i])){
           explosions.push([player[1][0], player[1][1], stateTimer + player[1][13], 0]);
           soundPlayer[3].play();
           player[1][6] = 3;                // Player state to dead
