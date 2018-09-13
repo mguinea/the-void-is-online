@@ -4,8 +4,8 @@ var splashState = {
   },
 
   update: function(){
-    if(stateTimer > 0){
-      setState(gameState);
+    if(stateTimer > 3){
+      setState(menuState);
     }
   },
 

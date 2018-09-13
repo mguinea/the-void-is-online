@@ -20,6 +20,7 @@ var gameState = {
     stateTimer = 0;
 		//powerups.push([256, 256, 52, 32, 3]);
 		enemies = [];
+		bossProjectiles = [];
 		floor = [];
 		// init floor
 		for(var i = 0; i < 10; ++i){
@@ -74,7 +75,7 @@ var gameState = {
 				gameData[1] = 0;
 			}
 		}
-		
+
 		if(keyPressedOnce(71)){ god = !god; console.log('GOD MODE: ' + god);}
     playerUpdate();
 

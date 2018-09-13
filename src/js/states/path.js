@@ -28,7 +28,7 @@ var pathState = {
       break;
       case 3:
         if(pathData[1] == 2){
-          pathData[1] = 3;
+          pathData[1] = 4;
         }else if(pathData[1] == 3){
           pathData[1] = 5;
         }
