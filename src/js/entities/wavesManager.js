@@ -1,4 +1,4 @@
-var wavesMoment = [], totalLevelTime = 0, wavesPerLevel = 0, amountToSpawn = [4, 6]; //totalLevelTime = 90, wavesPerLevel = 15
+var wavesMoment = [], totalLevelTime = 90, wavesPerLevel = 15, amountToSpawn = [4, 6]; //totalLevelTime = 90, wavesPerLevel = 15
 
 function wavesManagerInit(){
 

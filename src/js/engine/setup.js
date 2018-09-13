@@ -32,7 +32,21 @@ localStorageId = 'tvio-js13k-2018',
 reqId = null,
 pause = false,
 god = false,
+fullscreen      = false,
 DEBUG = false;
+
+/* SHARE */
+var locationref = 'http://js13kgames.com/entries/the-void-is-online';
+
+function baseMessage(){
+  return 'I reached '+ storageGet('hi', 0) +' points as ' + storageGet('hip', 'PLAYER 1') + ' in #theVoidIsOnline #js13k #js13kgames by @marcguineacasas ';
+}
+
+function shareTwitter(){
+  var message = baseMessage() + locationref;
+  var link = encodeURIComponent(message);
+  window.open('https://twitter.com/home?status='+link);
+}
 
 /* DOM setup */
 d.style.webkitTransformOrigin = d.style.transformOrigin = "0 0";
@@ -44,6 +58,19 @@ c.style.left = GAME_MARGIN + "px";
 document.oncontextmenu = function (e) {
   e.preventDefault();
 };
+
+document.getElementById('f').onclick=toggleFullscreen;
+function toggleFullscreen(evt){
+  if (document.fullscreenEnabled) {
+    fullscreen?document.exitFullscreen():document.body.requestFullscreen();
+  } else if (document['webkitFullscreenEnabled']) {
+    fullscreen?document.webkitExitFullscreen():document.body.webkitRequestFullscreen();
+  } else if (document.mozFullScreenEnabled) {
+    fullscreen?document.mozCancelFullScreen():document.body.mozRequestFullScreen();
+  }
+  fullscreen=!fullscreen;
+  evt.preventDefault();
+}
 
 /* WebGL setup */
 gl.viewport(0, 0, W, H);

@@ -317,7 +317,7 @@ function playerUpdate(){
     }
 
     // Attack
-    if(pressing[17] && player[1][9] < stateTimer){
+    if(pressing[190] && player[1][9] < stateTimer){
       player[1][9] = stateTimer + player[1][10];
       soundPlayer[5].play();
 

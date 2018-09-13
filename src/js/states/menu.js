@@ -42,16 +42,19 @@ var menuState = {
         }
       }else if((pressing[83] || pressing[40]) && menuData[3] < stateTimer){ // Down
         menuData[3] = stateTimer + menuData[2];
-        if(menuData[0] < 1){
+        if(menuData[0] < 2){
           menuData[0] += 1;
           soundPlayer[1].play();
         }
       }
-
       if(keyPressedOnce(13)){
-        menuData[4] = 1;
-        menuData[3] = stateTimer + 1;
-        soundPlayer[2].play();
+        if(menuData[0] == 0 || menuData[0] == 1){
+          menuData[4] = 1;
+          menuData[3] = stateTimer + 1;
+          soundPlayer[2].play();
+        }else{
+          shareTwitter();
+        }
       }
     }
 
@@ -70,7 +73,7 @@ var menuState = {
 
       font ('1 PLAYER', menuData[1][0][0], menuData[1][0][1], 17, 1, 1);
       font ('2 PLAYERS', menuData[1][1][0], menuData[1][1][1], 17, 1, 1);
-      // font ('OPTIONS', menuData[1][2][0], menuData[1][2][1], 17, 1, 1);
+      font ('TWEET HIGH SCORE', menuData[1][2][0], menuData[1][2][1], 17, 1, 1);
       if(menuData[4] == 0){
         playerMenuDraw(menuData[1][menuData[0]][0] - 80, menuData[1][menuData[0]][1]);
       }else{
